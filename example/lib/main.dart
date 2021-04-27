@@ -1,3 +1,4 @@
+import 'package:example/second_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
 
@@ -14,15 +15,19 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: TotoALa(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class TotoALa extends LazxScreen<SecondViewModel> {
   @override
-  Widget build(BuildContext context) {
+  SecondViewModel getViewModel() => SecondViewModel();
+
+  @override
+  Widget build(BuildContext context, SecondViewModel viewModel) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Example'),
       ),
@@ -30,11 +35,20 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times: ${Calculator().addOne(2)}',
-            ),
+            StreamBuilder<int>(
+                stream: viewModel.counter,
+                builder: (context, snapshot) {
+                  return Text(
+                    'You have pushed the button this many times: ${snapshot.data}',
+                  );
+                }),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => viewModel.increment(),
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.pink[200],
       ),
     );
   }
