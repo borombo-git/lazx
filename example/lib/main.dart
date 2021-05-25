@@ -27,48 +27,47 @@ class HomeScreen extends LazxScreen<ExampleViewModel> {
   @override
   Widget build(BuildContext context, ExampleViewModel viewModel) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Example'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            LazxStateBuilder<int>(
-              data: viewModel.counter,
-              initial: (context, toto) {
-                return Text(
-                  'You have pushed the button this many times: $toto',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-              loading: (_, __) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              success: (context, toto) {
-                return Text(
-                  'You have pushed the button this many times: $toto',
-                  style: TextStyle(color: Colors.green, fontSize: 32),
-                );
-              },
-            ),
-            LazxBuilder<int>(
-              data: viewModel.counter,
-              builder: (context, toto) {
-                return Text(
-                  'You have pushed the button this many times: $toto',
-                  style: TextStyle(fontSize: 28),
-                );
-              },
-            )
-          ],
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text('Example'),
         ),
-      ),
-      floatingActionButton: ClassicFAB(),
-    );
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              LazxStateBuilder<int>(
+                data: viewModel.counter,
+                initial: (context, toto) {
+                  return Text(
+                    'You have pushed the button this many times: $toto',
+                    style: TextStyle(fontSize: 28),
+                  );
+                },
+                loading: (_, __) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                success: (context, toto) {
+                  return Text(
+                    'You have pushed the button this many times: $toto',
+                    style: TextStyle(color: Colors.green, fontSize: 32),
+                  );
+                },
+              ),
+              LazxBuilder<int>(
+                data: viewModel.counter,
+                builder: (context, toto) {
+                  return Text(
+                    'You have pushed the button this many times: $toto',
+                    style: TextStyle(fontSize: 28),
+                  );
+                },
+              )
+            ],
+          ),
+        ),
+        floatingActionButton: HomeFAB2(viewModel.counter));
   }
 }
 
@@ -131,7 +130,8 @@ class HomeFAB2 extends LazxWidget {
               }
           : null,
       child: const Icon(Icons.add),
-      backgroundColor: state != LxState.Loading ? Colors.pink[200] : Colors.pink[100],
+      backgroundColor:
+          state != LxState.Loading ? Colors.pink[200] : Colors.pink[100],
     );
   }
 }
