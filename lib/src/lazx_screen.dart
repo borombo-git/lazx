@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
+import 'package:provider/provider.dart';
 
 abstract class LazxScreen<T extends LazxViewModel> extends StatefulWidget {
   T getViewModel();
@@ -13,7 +14,7 @@ abstract class LazxScreen<T extends LazxViewModel> extends StatefulWidget {
 }
 
 class LazxState<T extends LazxViewModel> extends State<LazxScreen<T>> {
-  T viewModel;
+  late T viewModel;
 
   @override
   void initState() {
@@ -30,6 +31,9 @@ class LazxState<T extends LazxViewModel> extends State<LazxScreen<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.build(context, viewModel);
+    return Provider<T>(
+      create: (_) => viewModel,
+      child: widget.build(context, viewModel),
+    );
   }
 }

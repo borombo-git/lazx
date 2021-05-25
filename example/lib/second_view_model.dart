@@ -1,14 +1,11 @@
-import 'package:lazx/lazx.dart';
 import 'package:rxdart/rxdart.dart';
 
-class SecondViewModel extends LazxViewModel {
+class SecondViewModel {
   int _counterStrike = 0;
   final _counter = BehaviorSubject<int>();
   Stream<int> get counter => _counter.stream;
 
-  @override
   void init() {
-    super.init();
     _counter.sink.add(_counterStrike);
   }
 
@@ -16,7 +13,6 @@ class SecondViewModel extends LazxViewModel {
     _counter.sink.add(_counterStrike++);
   }
 
-  @override
   void dispose() {
     _counter.close();
   }
