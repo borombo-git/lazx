@@ -1,10 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lazx/lazx.dart';
 
 void main() {
-  test('Fake addition test', () {
-    final a = 1;
-    final b = 2;
-    expect(a + b, 3);
-    //expect(() => calculator.addOne(null), throwsNoSuchMethodError);
+  group('LazxData Tests', () {
+    group('Simple Lazx Data', () {
+      test('check the right initial value', () {
+        final data = LazxData<int>(1);
+        expect(data.value, 1);
+      });
+    });
   });
 }
