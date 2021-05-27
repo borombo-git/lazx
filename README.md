@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://github.com/BBorombo/lazx/actions"><img src="https://github.com/BBorombo/lazx/workflows/Build/badge.svg" alt="build"></a>
-<a href="https://codecov.io/gh/BBorombo/lazx"><img src="https://codecov.io/gh/BBorombo/lazx/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="https://codecov.io/gh/BBorombo/lazx"><img src="https://codecov.io/gh/BBorombo/lazx/branch/main/graph/badge.svg" alt="codecov"></a>
 <a href="https://github.com/BBorombo/lazx"><img src="https://img.shields.io/github/stars/BBorombo/lazx.svg?style=flat&logo=github&colorB=deeppink&label=stars" alt="Star on Github"></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
 <a href="https://www.buymeacoffee.com/borombo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="25px"></a>
