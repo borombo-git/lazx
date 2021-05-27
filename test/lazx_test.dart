@@ -8,6 +8,12 @@ void main() {
         final data = LazxData<int>(1);
         expect(data.value, 1);
       });
+
+      test('check the right value after update', () {
+        final data = LazxData<int>(1);
+        data.push(2);
+        expect(data.value, 2);
+      });
     });
   });
 }
