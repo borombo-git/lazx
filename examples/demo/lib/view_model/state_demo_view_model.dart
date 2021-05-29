@@ -1,6 +1,6 @@
 import 'package:lazx/lazx.dart';
 
-class ExampleViewModel extends LazxViewModel {
+class StateDemoViewModel extends LazxViewModel {
   LazxData<int> counter = LazxData<int>(0);
 
   @override

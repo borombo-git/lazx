@@ -70,7 +70,7 @@ packages:
   lazx:
     dependency: "direct main"
     description:
-      path: ".."
+      path: "../.."
       relative: true
     source: path
     version: "0.0.1"
