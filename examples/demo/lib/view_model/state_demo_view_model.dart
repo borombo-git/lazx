@@ -8,7 +8,7 @@ class StateDemoViewModel extends LazxViewModel {
 
   void increment() {
     counter.setState(LxState.Loading);
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 1), () {
       counter.push(counter.value + 1, lxState: LxState.Success);
     });
   }
