@@ -32,10 +32,10 @@ You will not have to *handle many files, inherit many classes or think about the
 Enough talking let's jump into the concrete things 👇
 
 ## Usage
-Coming soon. 🎬
+In progress. 🧐
 
 ## Examples
-Under Development. 🏗
+- [Demo App](https://github.com/borombo-git/lazx/tree/main/examples/demo) - A simple demo of all the Lazx Widgets/Builders
 
 ## Motivation
 
@@ -66,7 +66,7 @@ _Want to contribute to the project? Here are some points where you can contribut
 Any contribution is welcomed!
 
 ## Articles and Videos
-In progress. 🧐
+Coming soon. 🎬
 
 ## Dart Version
 - Dart 2: >= 2.12
