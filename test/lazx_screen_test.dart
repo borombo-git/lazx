@@ -20,23 +20,7 @@ class TestScreen extends LazxScreen<FakeViewModel> {
 
   @override
   Widget build(BuildContext context, FakeViewModel viewModel) {
-    return MaterialApp(
-      key: const Key('material_app'),
-      home: Column(
-        children: [
-          ElevatedButton(
-            key: const Key('raised_button_1'),
-            child: const SizedBox(),
-            onPressed: () {},
-          ),
-          ElevatedButton(
-            key: const Key('raised_button_2'),
-            child: const SizedBox(),
-            onPressed: () {},
-          ),
-        ],
-      ),
-    );
+    return Container();
   }
 }
 
@@ -46,11 +30,9 @@ class TestApp extends StatelessWidget {
   const TestApp(this.viewModel) : super();
   @override
   Widget build(BuildContext context) {
-    return Builder(
-        key: const Key('screen'),
-        builder: (BuildContext context) {
-          return TestScreen(viewModel);
-        });
+    return MaterialApp(
+      home: TestScreen(viewModel),
+    );
   }
 }
 
