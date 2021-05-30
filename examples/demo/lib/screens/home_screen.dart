@@ -1,9 +1,9 @@
-import 'package:demo/screens/lx_state_builder_demo.dart';
-import 'package:demo/screens/lx_view_demo.dart';
-import 'package:demo/screens/lx_widget_demo.dart';
 import 'package:flutter/material.dart';
 
 import 'lx_data_builder_demo.dart';
+import 'lx_state_builder_demo.dart';
+import 'lx_view_demo.dart';
+import 'lx_widget_demo.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

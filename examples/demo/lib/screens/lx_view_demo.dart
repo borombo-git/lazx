@@ -1,6 +1,6 @@
-import 'package:demo/view_model/simple_demo_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
+import '../view_model/simple_demo_view_model.dart';
 
 class LxDemoView extends LazxView<SimpleDemoViewModel> {
   @override
