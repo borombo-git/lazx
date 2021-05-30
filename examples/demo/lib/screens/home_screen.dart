@@ -1,5 +1,5 @@
-import 'package:demo/screens/lx_screen_demo.dart';
 import 'package:demo/screens/lx_state_builder_demo.dart';
+import 'package:demo/screens/lx_view_demo.dart';
 import 'package:demo/screens/lx_widget_demo.dart';
 import 'package:flutter/material.dart';
 
@@ -19,10 +19,10 @@ class HomeScreen extends StatelessWidget {
           children: <Widget>[
             // Simple Screen + View Model
             ElevatedButton(
-              child: Text('Simple Demo : Screen + VM'),
+              child: Text('Simple Demo : View + VM'),
               onPressed: () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => LxDemoScreen()));
+                    .push(MaterialPageRoute(builder: (_) => LxDemoView()));
               },
             ),
             // State Builder

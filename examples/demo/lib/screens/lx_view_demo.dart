@@ -2,7 +2,7 @@ import 'package:demo/view_model/simple_demo_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
 
-class LxDemoScreen extends LazxScreen<SimpleDemoViewModel> {
+class LxDemoView extends LazxView<SimpleDemoViewModel> {
   @override
   SimpleDemoViewModel getViewModel() => SimpleDemoViewModel();
 

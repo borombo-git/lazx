@@ -12,14 +12,11 @@ abstract class LazxViewModel {
   List<LazxData> get props;
 
   /// Can be override to initialise some calls or variables
-  void init() {
-    print('Init view Model');
-  }
+  void init() {}
 
   /// Can be override to finish some calls/listeners
   /// It's also used to dispose all the [LazxData]
   void dispose() {
-    print('Dispose view Model');
     props.forEach((value) => value.dispose());
   }
 }

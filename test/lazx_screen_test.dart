@@ -10,7 +10,7 @@ class FakeViewModel extends Mock implements LazxViewModel {
   List<LazxData> get props => [data];
 }
 
-class TestScreen extends LazxScreen<FakeViewModel> {
+class TestScreen extends LazxView<FakeViewModel> {
   final FakeViewModel _viewModel;
 
   TestScreen(this._viewModel);

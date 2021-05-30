@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
 import 'package:provider/provider.dart';
 
-/// [LazxScreen] is a base widget for a screen (or other part) in your app that
+/// [LazxView] is a base widget for a screen (or other part) in your app that
 /// will (optionally) have a viewModel
 ///
-/// By default, the [LazxScreen] is a StatefulWidget but the state is handler here
+/// By default, the [LazxView] is a StatefulWidget but the state is handler here
 /// directly. When used, you don't have to create a State for it, but you can
-/// override all the methods of a classic state directly from your [LazxScreen]
+/// override all the methods of a classic state directly from your [LazxView]
 /// widget.
-abstract class LazxScreen<T extends LazxViewModel> extends StatefulWidget {
+abstract class LazxView<T extends LazxViewModel> extends StatefulWidget {
   /// Function that should be implemented in your screen to initialize and
   /// define the type of the [LazxViewModel] of your screen
   T getViewModel();
@@ -25,9 +25,9 @@ abstract class LazxScreen<T extends LazxViewModel> extends StatefulWidget {
   LazxState<T> createState() => LazxState<T>();
 }
 
-/// [LazxState] Represents the state for the [LazxScreen] so you don't have
+/// [LazxState] Represents the state for the [LazxView] so you don't have
 /// to handle it
-class LazxState<T extends LazxViewModel> extends State<LazxScreen<T>> {
+class LazxState<T extends LazxViewModel> extends State<LazxView<T>> {
   /// [viewModel] will be your viewModel. It's keep in the state so it's linked
   /// to you screen widget lifestyle
   late T viewModel;
@@ -48,7 +48,7 @@ class LazxState<T extends LazxViewModel> extends State<LazxScreen<T>> {
   }
 
   /// This is the classic build function.
-  /// It will call the build function defined in your [LazxScreen] and pass it
+  /// It will call the build function defined in your [LazxView] and pass it
   /// the [viewModel] with the help of a [Provider]
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:demo/view_model/state_demo_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
 
-class LazxDataBuilderScreenDemo extends LazxScreen<StateDemoViewModel> {
+class LazxDataBuilderScreenDemo extends LazxView<StateDemoViewModel> {
   @override
   StateDemoViewModel getViewModel() => StateDemoViewModel();
 

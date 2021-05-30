@@ -3,11 +3,12 @@ import 'package:rxdart/rxdart.dart';
 /// [LxState] represent the different state of a data.
 ///
 /// By default a data can have 4 different states that covers most of the use cases
-/// [Initial] : Represent an the default state for a data. Could be before a
-/// loading/success/error flow, or just the one default state. This one is the
-/// [Loading] : Represent an loading state for a data, if application
+/// [Initial] : Represent the default state for a data. Could be before a
+/// loading/success/error flow, or just the one default state. By default, every
+/// data/view will starts with this state.
+/// [Loading] : Represent a loading state for the data, if applicable.
 /// [Success] : Represent an success state for a data. Could also be for a loaded data
-/// [Error] : Represent an error state for a data, if applicable
+/// [Error] : Represent an error state for a data, if applicable.
 enum LxState { Initial, Loading, Success, Error }
 
 /// [LazxData] represent a data with state management integrated.
