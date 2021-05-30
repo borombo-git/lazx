@@ -113,13 +113,13 @@ class LxDemoScreen extends LazxScreen<SimpleDemoViewModel> {
   Widget build(BuildContext context, SimpleDemoViewModel viewModel) {  
     return Scaffold(  
       backgroundColor: Colors.white,  
-	  appBar: AppBar(  
+      appBar: AppBar(  
         title: Text('Lazx Screen Demo'),  
-	  ),  
-	  body: Center(  
+      ),  
+      body: Center(  
         child: Text('Too Lazx'),   
-	  ),  
-	);  
+      ),  
+    );  
   }  
 }
 ```
@@ -195,7 +195,7 @@ class LxCounterText extends LazxStateWidget {
     return Text(  
       '$data',  
       style: TextStyle(color: Colors.green),
-	);  
+    );  
   }  
 }
 ```
