@@ -87,5 +87,45 @@ void main() {
       expect(find.text('Data'), findsNothing);
       expect(find.text('Loading'), findsOneWidget);
     });
+
+    testWidgets('Test error builder is called', (WidgetTester tester) async {
+      final widget = MultipleStateTestWidget();
+      await tester.pumpWidget(
+        Builder(builder: (context) {
+          return widget.initial(context, 'Data');
+        }),
+      );
+
+      expect(find.text('Data'), findsOneWidget);
+
+      await tester.pumpWidget(
+        Builder(builder: (context) {
+          return widget.error(context, 'Data');
+        }),
+      );
+
+      expect(find.text('Data'), findsNothing);
+      expect(find.text('Error'), findsOneWidget);
+    });
+
+    testWidgets('Test success builder is called', (WidgetTester tester) async {
+      final widget = MultipleStateTestWidget();
+      await tester.pumpWidget(
+        Builder(builder: (context) {
+          return widget.initial(context, 'Data');
+        }),
+      );
+
+      expect(find.text('Data'), findsOneWidget);
+
+      await tester.pumpWidget(
+        Builder(builder: (context) {
+          return widget.success(context, 'Data');
+        }),
+      );
+
+      expect(find.text('Data'), findsNothing);
+      expect(find.text('Success'), findsOneWidget);
+    });
   });
 }
