@@ -9,7 +9,7 @@ import 'package:lazx/lazx.dart';
 ///
 /// It's an better version of an [LazxWidget] that reduce the boilerplate code
 /// to check the condition of a state and show something in consequence.
-abstract class LazxStateWidget<T> extends StatelessWidget {
+abstract class LazxStateWidget<T> with LxViewModelProvider {
   /// A build function called when the [LxState] of the data is initial.
   ///
   /// As it's the default builder, it's mandatory to override it to have at least
@@ -38,12 +38,5 @@ abstract class LazxStateWidget<T> extends StatelessWidget {
   /// is called.
   Widget error(BuildContext context, T? data) {
     return initial(context, data);
-  }
-
-  /// The classic build function that will never been called, but it's overrided
-  /// here to avoid it do be mandatory overrided when you inherit from this class
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

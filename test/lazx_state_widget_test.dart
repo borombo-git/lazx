@@ -64,7 +64,20 @@ void main() {
           return widget.loading(context, 0);
         }),
       );
+      expect(find.text('0'), findsOneWidget);
 
+      await tester.pumpWidget(
+        Builder(builder: (context) {
+          return widget.success(context, 0);
+        }),
+      );
+      expect(find.text('0'), findsOneWidget);
+
+      await tester.pumpWidget(
+        Builder(builder: (context) {
+          return widget.error(context, 0);
+        }),
+      );
       expect(find.text('0'), findsOneWidget);
     });
 

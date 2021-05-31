@@ -134,6 +134,12 @@ void main() {
 
       expect(find.text('1'), findsNothing);
       expect(find.text('Success'), findsOneWidget);
+
+      viewModel.data.push(1, lxState: LxState.Error);
+      await tester.pumpAndSettle();
+
+      expect(find.text('1'), findsNothing);
+      expect(find.text('Error'), findsOneWidget);
     });
   });
 }

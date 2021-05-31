@@ -58,11 +58,22 @@ void main() {
         expect(numBuilds, 1);
         expect(find.text('0'), findsOneWidget);
 
-        viewModel.data.push(-1, lxState: LxState.Error);
-
+        viewModel.data.push(1, lxState: LxState.Loading);
         await tester.pumpAndSettle();
 
         expect(numBuilds, 2);
+        expect(find.text('1'), findsOneWidget);
+
+        viewModel.data.push(2, lxState: LxState.Success);
+        await tester.pumpAndSettle();
+
+        expect(numBuilds, 3);
+        expect(find.text('2'), findsOneWidget);
+
+        viewModel.data.push(-1, lxState: LxState.Error);
+        await tester.pumpAndSettle();
+
+        expect(numBuilds, 4);
         expect(find.text('-1'), findsOneWidget);
       });
       testWidgets(
