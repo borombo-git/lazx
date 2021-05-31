@@ -21,7 +21,6 @@ void main() {
           data: viewModel.data,
           builder: (context, value) {
             numBuilds++;
-            print(value);
             return Text('$value');
           },
         ),
