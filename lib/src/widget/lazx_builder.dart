@@ -37,6 +37,7 @@ class LazxBuilder<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<T>(
         stream: data.stream,
+        initialData: data.value,
         builder: (context, snapshot) {
           return builder(context, snapshot.data);
         });
