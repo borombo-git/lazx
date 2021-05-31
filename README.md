@@ -1,4 +1,6 @@
-![logo](https://github.com/borombo-git/lazx/tree/main/images/lazx.png)
+<p align="center">
+<img src="https://github.com/borombo-git/lazx/raw/main/images/lazx.png?raw=true" alt="Lazx" />
+</p>
 
 <p align="center">
 <a href="https://github.com/BBorombo/lazx/actions"><img src="https://github.com/BBorombo/lazx/workflows/Build/badge.svg" alt="build"></a>
