@@ -10,7 +10,7 @@ class FakeViewModel extends LazxViewModel {
 }
 
 void main() {
-  group('LazxScreen tests', () {
+  group('LazxBuilder tests', () {
     testWidgets('Init', (WidgetTester tester) async {
       final viewModel = FakeViewModel();
       var numBuilds = 0;
