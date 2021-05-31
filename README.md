@@ -1,3 +1,5 @@
+![logo](https://github.com/borombo-git/lazx/tree/main/images/lazx.png)
+
 <p align="center">
 <a href="https://github.com/BBorombo/lazx/actions"><img src="https://github.com/BBorombo/lazx/workflows/Build/badge.svg" alt="build"></a>
 <a href="https://codecov.io/gh/BBorombo/lazx"><img src="https://codecov.io/gh/BBorombo/lazx/branch/main/graph/badge.svg" alt="codecov"></a>
@@ -25,7 +27,7 @@ From a lazy dev for lazy devs. 🥱
 ## Introduction
 Lazx is a state-management library that makes it easy to handle reactive data, from your UI without having to think about how you will do it.
 
-It's based on the **MVVM design pattern** and allows you to implement it in the easiest way possible.
+It's based on the **MVVM design pattern** and allows you to implement it in the easiest possible way.
 
 You will not have to *handle many files, inherit many classes or think about the best way to implement it*, everything is done in a way that you just have to think about the logic and UI of your app, nothing more (and nothing less, I can't make your app for you 🤷‍♂️).
 
