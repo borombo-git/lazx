@@ -64,6 +64,7 @@ class _LazxStateBuilderState<T> extends State<LazxStateBuilder<T>> {
   initState() {
     super.initState();
     widget.data.state.listen((state) {
+      if (!mounted) return;
       setState(() {
         dataState = state;
       });

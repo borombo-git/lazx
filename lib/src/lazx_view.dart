@@ -17,6 +17,8 @@ abstract class LazxView<T extends LazxViewModel> extends StatefulWidget {
   /// Could be override to be used in the state of your widget
   void dispose(BuildContext context) {}
 
+  void init(BuildContext context, T viewModel) {}
+
   /// This build function will replace the classic [build] to give you access to
   /// your viewModel
   Widget build(BuildContext context, T viewModel);
@@ -37,6 +39,7 @@ class LazxState<T extends LazxViewModel> extends State<LazxView<T>> {
   void initState() {
     super.initState();
     viewModel = widget.getViewModel()..init();
+    widget.init(context, viewModel);
   }
 
   /// Will dispose your state and do the same to your [viewModel]

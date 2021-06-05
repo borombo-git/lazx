@@ -13,7 +13,7 @@ import 'package:lazx/src/lazx_data.dart';
 /// you don't have to handle the state for it.
 abstract class LazxWidget extends StatefulWidget with LxViewModelProvider {
   /// The [data] that will be listened to execute the build function
-  final LazxData data;
+  final LazxObservable data;
 
   const LazxWidget({Key? key, required this.data}) : super(key: key);
 
@@ -38,6 +38,7 @@ class _LazxWidgetState extends State<LazxWidget> {
   void initState() {
     super.initState();
     widget.data.state.listen((state) {
+      if (!mounted) return;
       setState(() {
         _state = state;
       });
@@ -52,6 +53,7 @@ class _LazxWidgetState extends State<LazxWidget> {
   /// the[data]
   @override
   Widget build(BuildContext context) {
-    return widget.build(context, _state, widget.data.value);
+    return widget.build(context, _state,
+        widget.data is LazxData ? (LazxData(widget.data)).value : null);
   }
 }

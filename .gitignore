@@ -25,6 +25,7 @@
 .packages
 .pub-cache/
 .pub/
+*.env
 build/
 coverage/
 

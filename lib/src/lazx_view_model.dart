@@ -9,7 +9,7 @@ abstract class LazxViewModel {
   ///
   /// This variable is used to handle the lifecycle of your liveData as your viewModel
   /// is tied to the lifecycle of your Widget
-  List<LazxData> get props;
+  List<LazxObservable> get props;
 
   /// Can be override to initialise some calls or variables
   void init() {}

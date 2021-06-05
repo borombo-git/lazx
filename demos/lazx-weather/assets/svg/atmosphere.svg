@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="497px" height="497px" viewBox="0 0 497 497" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 2 Copy 5</title>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-2-Copy-5">
+            <rect id="Rectangle-Copy" x="0" y="0" width="497" height="497"></rect>
+            <g id="Group-5" transform="translate(35.000000, 101.000000)" fill="#F7F7F7">
+                <path d="M188,0 L462,0 L462,0 L462,40 L188,40 C176.954305,40 168,31.045695 168,20 C168,8.954305 176.954305,2.02906125e-15 188,0 Z" id="Rectangle"></path>
+                <path d="M188,170 L462,170 L462,170 L462,210 L188,210 C176.954305,210 168,201.045695 168,190 C168,178.954305 176.954305,170 188,170 Z" id="Rectangle-Copy-3"></path>
+                <rect id="Rectangle-Copy-2" x="43" y="85" width="367" height="40" rx="20"></rect>
+                <rect id="Rectangle-Copy-4" x="0" y="255" width="367" height="40" rx="20"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
