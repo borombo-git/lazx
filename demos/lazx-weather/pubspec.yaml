@@ -17,7 +17,6 @@ dependencies:
   flutter_svg: ^0.22.0
   url_launcher: ^6.0.4
   auto_size_text: 3.0.0-nullsafety.0
-  shared_preferences: ^2.0.6
   flutter_dotenv: ^5.0.0
   equatable: ^2.0.2
   dio: ^4.0.0
@@ -29,8 +28,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  bloc_test: ^7.1.0
-  mockito: ^4.0.0
 
 flutter:
 

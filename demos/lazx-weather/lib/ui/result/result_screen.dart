@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/gestures.dart';
 import 'package:lazx_weather/common/constants.dart';
 import 'package:lazx_weather/model/weather.dart';
 import 'package:lazx_weather/ui/result/result_view_model.dart';
@@ -6,6 +7,7 @@ import 'package:lazx_weather/utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
 import 'package:lazx_weather/utils/extensions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ResultScreen extends LazxView<ResultViewModel> {
   @override
@@ -132,6 +134,29 @@ class ResultScreen extends LazxView<ResultViewModel> {
   }
 }
 
+class Credits extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      textAlign: TextAlign.right,
+      text: TextSpan(
+        children: [
+          TextSpan(text: 'Designed inspired by '),
+          TextSpan(
+            text: 'Kian on Dribble',
+            style: inspirationLinkTextStyle,
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                launch('https://dribbble.com/shots/10061507-Sunny-Cloudy-Rain');
+              },
+          ),
+        ],
+        style: inspirationTextStyle,
+      ),
+    );
+  }
+}
+
 class Separator extends StatelessWidget {
   const Separator({
     Key? key,
@@ -139,12 +164,21 @@ class Separator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 32.0),
-      child: Container(
-        height: 1,
-        color: Colors.white,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: Credits(),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 32.0),
+          child: Container(
+            height: 1,
+            color: Colors.white,
+          ),
+        ),
+      ],
     );
   }
 }

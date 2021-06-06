@@ -30,6 +30,18 @@ const weatherInfoStyle = TextStyle(
   color: Colors.white,
 );
 
+const inspirationTextStyle = TextStyle(
+  fontFamily: 'AvenirNext',
+  fontSize: 14,
+  color: Colors.white,
+);
+
+const inspirationLinkTextStyle = TextStyle(
+  fontFamily: 'AvenirNext-Bold',
+  fontSize: 14,
+  color: Colors.white,
+);
+
 // Preferences keys
 const kFirstKey = 'key';
 
