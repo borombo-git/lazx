@@ -1,16 +1,15 @@
-# demos
+# Lazx Weather ☀️
 
-Weahter app using Lazx
+Weahter app using Lazx lib. 🦋
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a more advanced app using the Lazx lib. 
 
-A few resources to get you started if this is your first Flutter project:
+To make it works you should add a **.env** file at the root of the projet folder.
+In this file you should add your (free) [OpenWeather](https://openweathermap.org/api) API key like this : 
+```
+OPEN_WEATHER_API_KEY=yourapikey
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Don't forget to do a `pub get` before running the app!
