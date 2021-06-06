@@ -20,10 +20,4 @@ class ResultViewModel extends LazxViewModel {
       }
     });
   }
-
-  @override
-  void dispose() {
-    print('Disposed Result View Model');
-    super.dispose();
-  }
 }

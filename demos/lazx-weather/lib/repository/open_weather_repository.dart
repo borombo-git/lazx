@@ -16,15 +16,15 @@ class OpenWeatherRepository implements WeatherRepository {
     try {
       final response = await _weatherApi.getRequest(params: {'q': city});
       if (response.statusCode == 200) {
-        print(response.data);
+        print('Response: ${response.data}');
         return LxResponse(
             success: true, data: Weather.fromJson(response.data!));
       } else {
-        print(response.statusMessage);
+        print('Weather API Error : ${response.statusMessage}');
         return LxResponse(error: response.statusMessage);
       }
     } catch (e) {
-      print(e.toString());
+      print('Error : $e');
       return LxResponse(error: e.toString());
     }
   }

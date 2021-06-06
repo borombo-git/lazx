@@ -6,8 +6,10 @@ class SearchViewModel extends LazxViewModel {
   late WeatherManager _weatherManager;
 
   LazxState weatherRequest = LazxState();
-
   TextEditingController cityTextController = TextEditingController();
+
+  @override
+  List<LazxObservable> get props => [weatherRequest];
 
   @override
   void init() {
@@ -41,7 +43,4 @@ class SearchViewModel extends LazxViewModel {
     cityTextController.dispose();
     super.dispose();
   }
-
-  @override
-  List<LazxObservable> get props => [weatherRequest];
 }

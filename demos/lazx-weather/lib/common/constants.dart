@@ -1,6 +1,5 @@
 // Colors
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 const kAccentColor = Color(0xFFEEAAD8);
 const kTransparent = Color(0x00FFFFFF);
@@ -41,9 +40,6 @@ const inspirationLinkTextStyle = TextStyle(
   fontSize: 14,
   color: Colors.white,
 );
-
-// Preferences keys
-const kFirstKey = 'key';
 
 // Env keys
 const kOpenWeatherApiKey = 'OPEN_WEATHER_API_KEY';
