@@ -22,6 +22,10 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+        
+      - name: Install Lazx Weather dependencies
+        working-directory: ./demos/lazx-weather
+        run: flutter pub get
 
       - name: Analyze project source
         run: dart analyze
