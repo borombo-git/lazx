@@ -11,5 +11,10 @@ In this file you should add your (free) [OpenWeather](https://openweathermap.org
 ```
 OPEN_WEATHER_API_KEY=yourapikey
 ```
+Next, you should uncomment the line 
+````yaml
+#    - .env
+````
+In the `pubspec.yaml`file. 
 
-Don't forget to do a `pub get` before running the app!
+Also don't forget to do a `pub get` before running the app!

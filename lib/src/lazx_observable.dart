@@ -9,5 +9,7 @@ abstract class LazxObservable {
   final stateObserver = BehaviorSubject<LxState>();
   Stream<LxState> get state => stateObserver.stream;
 
-  void dispose();
+  void dispose() {
+    stateObserver.close();
+  }
 }

@@ -29,10 +29,6 @@ class LazxData<T> extends LazxObservable {
   /// Represent your data
   T _value;
 
-  /// An observer for your data's state
-  final _stateObserver = BehaviorSubject<LxState>();
-  Stream<LxState> get state => _stateObserver.stream;
-
   /// An observer for your data's value
   final _valueObserver = BehaviorSubject<T>();
   Stream<T> get stream => _valueObserver.stream;
@@ -42,9 +38,9 @@ class LazxData<T> extends LazxObservable {
 
   /// Changed the [LxState] of your data and triggers all the listeners
   void setState(LxState lxState) {
-    if (!_stateObserver.isClosed) {
+    if (!stateObserver.isClosed) {
       this._state = lxState;
-      this._stateObserver.sink.add(this._state!);
+      this.stateObserver.sink.add(this._state!);
     }
   }
 
@@ -60,7 +56,7 @@ class LazxData<T> extends LazxObservable {
   /// Close all the observers
   @override
   void dispose() {
-    _stateObserver.close();
+    super.dispose();
     _valueObserver.close();
   }
 }
