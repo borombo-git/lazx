@@ -54,6 +54,6 @@ class _LazxWidgetState extends State<LazxWidget> {
   @override
   Widget build(BuildContext context) {
     return widget.build(context, _state,
-        widget.data is LazxData ? (LazxData(widget.data)).value : null);
+        widget.data is LazxData ? (widget.data as LazxData).value : null);
   }
 }
