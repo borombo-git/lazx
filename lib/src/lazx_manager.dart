@@ -3,6 +3,10 @@ import 'package:lazx/src/lazx_observer.dart';
 abstract class LazxManager {
   List<LazxObserver> get props;
 
+  LazxManager() {
+    init();
+  }
+
   /// Can be override to initialise some calls or variables
   void init() {}
 
