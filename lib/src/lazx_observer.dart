@@ -1,5 +1,12 @@
+import 'package:lazx/lazx.dart';
 import 'package:rxdart/rxdart.dart';
 
+/// [LazxObserver] represent an observer to your data (made to be used in your
+/// repo or data provider for a [LazxManager] manager).
+///
+/// [T] represent the type of your data.
+///
+/// This class is similar to [LazxData] without the state handled.
 class LazxObserver<T> {
   /// You can create [LazxObserver] with a default value.
   LazxObserver({T? initialValue}) {
