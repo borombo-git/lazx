@@ -388,4 +388,4 @@ Coming soon. 🎬
 - Dart 2: >= 2.12
 
 ## Maintainers
-- [Borombo](https://github.com/BBorombo)
+- [Borombo](https://github.com/borombo-git)
