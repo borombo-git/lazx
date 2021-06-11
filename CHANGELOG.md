@@ -1,3 +1,8 @@
+## [1.1.1]
+
+* Update README with the new components
+* Add link for the new demo, Lazx Weather
+
 ## [1.1.0]
 
 * Add Lazx App Widget + Tests
