@@ -109,7 +109,7 @@ I've called a view ~~LazxScreen~~ `LazxView` as usually, a there's a view model 
 > Of course, you can totally use a `LazxView` for a portion of your screen (also known as Fragment in Android) 
 
 ```dart
-class LxDemoScreen extends LazxScreen<SimpleDemoViewModel> {  
+class LxDemoScreen extends LazxView<SimpleDemoViewModel> {  
   @override  
   SimpleDemoViewModel getViewModel() => SimpleDemoViewModel();  
   
