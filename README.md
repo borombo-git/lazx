@@ -137,8 +137,140 @@ You can of course access your view model in other Widgets down in the tree of yo
 // Access view model from any widget down in the sub tree  
 viewModel<SimpleDemoViewModel>(context).doSomething();
 ```
+
+### Lazx Useful classes
+I've added some classes to make the possibility to build big apps easier and match most of the use cases you will encounter.
+
+#### Lazx State
+The `Lazx State` is almost the same as a `Lazx Data`, the only difference is that there's no data, juste a state to listen.
+This could be useful when you only need a state for something that doesn't necessarily have a data.
+
+
+````dart
+LazxState request = LazxState();
+
+// Set the state
+request.setState(LxState.Loading);
+
+// Listen the state
+request.state.listen((state) {
+  print(state);
+});
+````
+
+The `Lazx State` is made to be used with a `Lazx Listener`.
+
+#### Lazx Observer
+The `Lazx Observer` is almost the same as a `Lazx Data`, the only difference is that there's no state, juste the data to listen.
+It could be seen as an abstraction for an Rx Observer to a value.
+
+````dart
+// Initialize empty observer 
+LazxObserver<int?> value = LazxObserver();
+// Or with an initial value 
+LazxObserver<String> text = LazxObserver(initialValue: 'Hello');
+
+// Set the data
+value.set(1);
+
+// Listen the data
+value.observer.listen((data) {
+  print(data);
+});
+````
+
+The `Lazx Observer` is made to be used inside a `Lazx Manager`.
+
+#### Lazx Response
+A `Lazx Response` is simply a class to facilitate the response you can get from your sever or data provider.
+It will put it in a way that you can easily know if your request worked or not and act in consequences.
+````dart
+
+// A classic http request, handled with a LxResponse
+Future<LxResponse<int>> getTime() async {
+  try {
+    final response = await dataSource.httpRequest();
+    if (response.statusCode == 200) {
+      // Return a success response
+      return LxResponse(success: true, data: response.data);
+    } else {
+      // Return an error response
+      return LxResponse(error: response.statusMessage);
+    }
+  } catch (e) {
+    // Return an error response
+    return LxResponse(error: e.toString());
+  }
+}
+
+// A function that handle the http request result
+void showResult() async{
+  final LxResponse<int> response = await getTime();
+  
+  //Know if your request succeded
+  final isSuccess = response.success;
+
+  //Get your data
+  final data = response.data;
+  print('Result : $data');
+
+  //Get the error if there is one 
+  final error = response.error;
+  print('Error : $error');
+}
+````
+
+The `Lazx Observer` is made to be used witht the class that will handle your requests, generally the repository.
+
+#### Lazx Manager
+The `Lazx Manager` is simply a class made to manage your data globally inside your app.
+The manager should be the connection between your repositories and your view models. You handle all your logic
+transformation there.
+
+A `Lazx Manager` is just a little abstraction to handle the `Lazx Observer` that you could have in them.
+
+````dart
+class UserManager extends LazxManager {
+  static UserManager? _instance;
+  factory UserManager() => _instance ??= UserManager._();
+
+  UserManager._();
+  
+  late LazxObserver<User?> currentUser = LazxObserver();
+
+  @override
+  List<LazxObserver> get props => [currentUser];
+
+  //...
+}
+````
+Usually, my managers are singletons as I need them in multiples places in my app, but you can create them as you prefer.
+
 ### Lazx Widgets & Builders
-Let's see how you can use your data/view model in your different widgets. 
+Let's see how you can use your data/view model/manager in your different widgets. 
+
+#### Lazx App
+A `Lazx App` is a widget that you will extends on the the root widget of your application.
+This one will be used to handle your `Lazx Manager`s if you use them as singletons, to be able to dispose all the used
+`sink` when the app is finished and avoid memory leaks.
+
+```dart
+class MyApp extends LazxApp {
+  
+  @override
+  List<LazxManager> get managers => [MyManager()];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Lazx App',
+      theme: theme,
+      home: MyScreen(),
+    );
+   }
+}
+```
+Also, `Lazx App` is an abstraction of a StatefulWidget, so you can override the classic `initState` and `dispose` function
 
 #### Lazx Builder
 The easiest one, the `LazxBuilder` allows you to build a widget each time the value of your `LazxData` is updated.
@@ -218,7 +350,8 @@ The behavior is the same than with the `LazxStateBuilder`.
 Check the examples for more concrete usages 👇 
 
 ## Examples
-- [Demo App](https://github.com/borombo-git/lazx/tree/main/examples/demo) - A simple demo of all the Lazx Widgets/Builders
+- [Demo App ⚙️](https://github.com/borombo-git/lazx/tree/main/demos/demo) - A simple demo of all the Lazx Widgets/Builders
+- [Lazx Weather ☀️](https://github.com/borombo-git/lazx/tree/main/demos/lazx-weather) - A small weather app to showcase the usage of Lazx
 
 ## Motivation
 
