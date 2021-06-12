@@ -11,6 +11,8 @@ class SearchScreen extends LazxView<SearchViewModel> {
 
   @override
   void init(BuildContext context, SearchViewModel viewModel) {
+    /// Listen if the request succeed or not to push the next screen
+    /// or show an error message
     LazxListener(
         data: viewModel.weatherRequest,
         success: (state) {

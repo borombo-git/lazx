@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(StarterApp());
+    await tester.pumpWidget(LazxWeatherApp());
     expect(find.text('1'), findsNothing);
   });
 }

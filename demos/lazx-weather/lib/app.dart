@@ -5,9 +5,10 @@ import 'package:lazx/lazx.dart';
 
 import 'common/theme.dart';
 
-class StarterApp extends LazxApp {
+class LazxWeatherApp extends LazxApp {
   final _navigatorKey = GlobalKey<NavigatorState>();
 
+  // Initialize all the managers
   @override
   List<LazxManager> get managers => [WeatherManager()];
 
