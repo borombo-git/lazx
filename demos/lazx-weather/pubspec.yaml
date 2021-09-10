@@ -20,7 +20,7 @@ dependencies:
   flutter_dotenv: ^5.0.0
   equatable: ^2.0.2
   dio: ^4.0.0
-  rxdart: ^0.27.1
+  rxdart: ^0.26.0
   intl: ^0.17.0
   lazx:
     path: ../../
