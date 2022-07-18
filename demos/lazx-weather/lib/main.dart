@@ -5,9 +5,11 @@ import 'app.dart';
 
 Future<void> main() async {
   await init();
-  runApp(StarterApp());
+  runApp(LazxWeatherApp());
 }
 
+// Function to initialize things at the beginning
 Future<void> init() async {
+  // Load the .env file
   await dotenv.load(fileName: ".env");
 }

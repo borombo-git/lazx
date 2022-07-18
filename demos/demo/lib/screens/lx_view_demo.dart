@@ -26,6 +26,14 @@ class LxDemoView extends LazxView<SimpleDemoViewModel> {
                     style: Theme.of(context).textTheme.headline3,
                   );
                 }),
+            LazxBuilder<int>(
+                data: viewModel.counter2,
+                builder: (context, value) {
+                  return Text(
+                    '$value',
+                    style: Theme.of(context).textTheme.headline3,
+                  );
+                }),
           ],
         ),
       ),

@@ -9,6 +9,8 @@ class LazxState extends LazxObservable {
 
   /// Set a new value
   void setState(LxState newState) {
-    stateObserver.sink.add(newState);
+    if (!stateObserver.isClosed) {
+      stateObserver.sink.add(newState);
+    }
   }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>605125347521-9jfhalrm4sk4k9mlv4s34uti9lhdrud1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.605125347521-9jfhalrm4sk4k9mlv4s34uti9lhdrud1</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>605125347521-mq7ns369h680ibob9l24aia6gubv3vjr.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBMTI0z67Djv8Z9iZrfIFq-GV3RARk-hJ0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>605125347521</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.borombo.lazxideas</string>
+	<key>PROJECT_ID</key>
+	<string>lazx-ideas</string>
+	<key>STORAGE_BUCKET</key>
+	<string>lazx-ideas.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:605125347521:ios:92a9c300dcc73f9a4e2c40</string>
+</dict>
+</plist>
