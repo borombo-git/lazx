@@ -1,3 +1,7 @@
+## [1.1.3]
+
+* Upgrade all libs versions
+
 ## [1.1.2]
 
 * Downgrade version of rxdart to support graphql lib
