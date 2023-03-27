@@ -1,5 +1,4 @@
 import 'package:lazx/lazx.dart';
-import 'package:lazx/src/lazx_observer.dart';
 
 /// [LazxManager] represent a manager that will handle your data inside your app.
 ///
