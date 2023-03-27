@@ -16,7 +16,8 @@ class Credits extends StatelessWidget {
             style: inspirationLinkTextStyle,
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                launch('https://dribbble.com/shots/10061507-Sunny-Cloudy-Rain');
+                launchUrl(Uri.parse(
+                    'https://dribbble.com/shots/10061507-Sunny-Cloudy-Rain'));
               },
           ),
         ],
