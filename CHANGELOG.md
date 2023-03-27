@@ -1,3 +1,7 @@
+## [1.1.4]
+
+* Upgrade all libs versions + Demos
+
 ## [1.1.3]
 
 * Upgrade all libs versions
