@@ -1,5 +1,3 @@
-import 'package:lazx/src/lazx_observable.dart';
-
 import '../lazx.dart';
 
 class LazxState extends LazxObservable {

@@ -15,8 +15,8 @@ class OpenWeatherApi {
   OpenWeatherApi._internal() {
     BaseOptions options = new BaseOptions(
         baseUrl: "https://api.openweathermap.org/data/2.5",
-        connectTimeout: 5000,
-        receiveTimeout: 3000,
+        connectTimeout: Duration(seconds: 5),
+        receiveTimeout: Duration(seconds: 3),
         responseType: ResponseType.json,
         headers: {
           "Accept": "application/json"
