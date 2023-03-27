@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lazx_idea/common/constants.dart';
 
-import 'constants.dart';
-
 final theme = ThemeData(
   accentColor: kAccentColor,
   bottomSheetTheme:

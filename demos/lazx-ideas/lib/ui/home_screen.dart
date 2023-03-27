@@ -3,8 +3,6 @@ import 'package:lazx/lazx.dart';
 import 'package:lazx_idea/common/constants.dart';
 import 'package:lazx_idea/ui/home_view_model.dart';
 
-import '../common/constants.dart';
-
 class HomeScreen extends LazxView<HomeViewModel> {
   @override
   HomeViewModel getViewModel() => HomeViewModel();
