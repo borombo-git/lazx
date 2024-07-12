@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'lx_data_builder_demo.dart';
+import 'lx_multi_builder_demo.dart';
 import 'lx_state_builder_demo.dart';
 import 'lx_view_demo.dart';
 import 'lx_widget_demo.dart';
@@ -47,6 +48,14 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => LazxDataBuilderScreenDemo()));
+              },
+            ),
+            // Multi Builder
+            ElevatedButton(
+              child: Text('Simple Demo : Multi Builder'),
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => LxMultiDemoView()));
               },
             ),
           ],
