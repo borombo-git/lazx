@@ -10,9 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  rxdart: ^0.27.7
-  provider: ^6.0.3
-  meta: ^1.8.0
+  rxdart: ^0.28.0
+  provider: ^6.1.2
+  meta: ^1.11.0
 
 dev_dependencies:
   flutter_test:
