@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lazx/lazx.dart';
-import 'package:lazx/src/widget/lazx_multi_builder.dart';
 
 class FakeViewModel extends LazxViewModel {
   final value = LazxData<int>(0);

@@ -69,7 +69,7 @@ class LxCounterText extends LazxStateWidget {
   Widget initial(BuildContext context, data) {
     return Text(
       '$data',
-      style: Theme.of(context).textTheme.headline3,
+      style: Theme.of(context).textTheme.displaySmall,
     );
   }
 
@@ -82,8 +82,10 @@ class LxCounterText extends LazxStateWidget {
   Widget success(BuildContext context, data) {
     return Text(
       '$data',
-      style:
-          Theme.of(context).textTheme.headline3!.copyWith(color: Colors.green),
+      style: Theme.of(context)
+          .textTheme
+          .displaySmall!
+          .copyWith(color: Colors.green),
     );
   }
 }
