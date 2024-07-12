@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'constants.dart';
 
 final theme = ThemeData(
-  accentColor: kAccentColor,
+  primaryColor: kAccentColor,
   bottomSheetTheme:
       BottomSheetThemeData(backgroundColor: Colors.black.withOpacity(0)),
   inputDecorationTheme: InputDecorationTheme(
