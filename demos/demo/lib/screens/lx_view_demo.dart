@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
+
 import '../view_model/simple_demo_view_model.dart';
 
 class LxDemoView extends LazxView<SimpleDemoViewModel> {
@@ -23,7 +24,7 @@ class LxDemoView extends LazxView<SimpleDemoViewModel> {
                 builder: (context, value) {
                   return Text(
                     '$value',
-                    style: Theme.of(context).textTheme.headline3,
+                    style: Theme.of(context).textTheme.displaySmall,
                   );
                 }),
             LazxBuilder<int>(
@@ -31,7 +32,7 @@ class LxDemoView extends LazxView<SimpleDemoViewModel> {
                 builder: (context, value) {
                   return Text(
                     '$value',
-                    style: Theme.of(context).textTheme.headline3,
+                    style: Theme.of(context).textTheme.displaySmall,
                   );
                 }),
           ],
