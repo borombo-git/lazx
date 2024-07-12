@@ -66,7 +66,7 @@ class LxFAB extends LazxStateWidget {
       },
       tooltip: 'Increment',
       child: Icon(Icons.add),
-      backgroundColor: Colors.purple,
+      backgroundColor: Colors.purple[50],
     );
   }
 

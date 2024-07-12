@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class DateUtils {
   static DateUtils? _instance;
   factory DateUtils() => _instance ??= DateUtils._();

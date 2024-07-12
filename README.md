@@ -347,6 +347,22 @@ LazxDataBuilder(
 ```
 The behavior is the same than with the `LazxStateBuilder`.
 
+#### Lazx Multi Builder
+The `LazxMultiBuilder` is like a `LazxBuilder` but it listen to multiple source of `LazxData` at the same time. 
+
+The widget is then rebuild each time one of the data is updated. 
+> ⚠️ The state is not used with this builder
+> 
+```dart
+LazxMultiBuilder(  
+  data: [viewModel.counter, viewModel.show],  
+  builder: (context, values) {  
+    return Text('Counter: ${values[0]} & Show: ${values[1]}');  
+  }
+),
+```
+The `values` list will contain the values of the data in the same order as the list you passed in the `data` parameter.
+
 Check the examples for more concrete usages 👇 
 
 ## Examples

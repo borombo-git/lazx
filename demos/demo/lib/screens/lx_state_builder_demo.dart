@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
+
 import '../view_model/state_demo_view_model.dart';
 
 class StateBuilderScreenDemo extends LazxView<StateDemoViewModel> {
@@ -23,7 +24,7 @@ class StateBuilderScreenDemo extends LazxView<StateDemoViewModel> {
                   initial: (context, value) {
                     return Text(
                       '$value',
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.displaySmall,
                     );
                   },
                   loading: (context, value) {
@@ -34,7 +35,7 @@ class StateBuilderScreenDemo extends LazxView<StateDemoViewModel> {
                       '$value',
                       style: Theme.of(context)
                           .textTheme
-                          .headline3!
+                          .displaySmall!
                           .copyWith(color: Colors.green),
                     );
                   }),

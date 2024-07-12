@@ -31,8 +31,12 @@ jobs:
         working-directory: ./demos/lazx-ideas
         run: flutter pub get
 
+      - name: Install Lazx Ideas dependencies
+        working-directory: ./demos/lazx-ideas
+        run: flutter pub get
+
       - name: Analyze project source
-        run: dart analyze --no-fatal-infos --no-fatal-warnings
+        run: dart analyze --no-fatal-warnings
 
       - name: Run tests
         run: flutter test --coverage

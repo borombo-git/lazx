@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
+
 import '../view_model/state_demo_view_model.dart';
 
 class LazxWidgetScreenDemo extends LazxView<StateDemoViewModel> {
@@ -39,13 +40,13 @@ class LxCounterText extends LazxWidget {
           '$data',
           style: Theme.of(context)
               .textTheme
-              .headline3!
+              .displaySmall!
               .copyWith(color: Colors.green),
         );
       default:
         return Text(
           '$data',
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.displaySmall,
         );
     }
   }
@@ -65,7 +66,7 @@ class LxFAB extends LazxWidget {
       tooltip: 'Increment',
       child: Icon(Icons.add),
       backgroundColor:
-          state != LxState.Loading ? Colors.purple : Colors.purple[200],
+          state != LxState.Loading ? Colors.purple[50] : Colors.purple[200],
     );
   }
 }

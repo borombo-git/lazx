@@ -1,3 +1,14 @@
+## [1.1.5]
+
+* Upgrade all libs versions
+* Add a new widget: LazxMultiBuilder
+* Upgrade & Update demos with the new widget
+* Update README with the new components
+
+## [1.1.4]
+
+* Upgrade all libs versions + Demos
+
 ## [1.1.3]
 
 * Upgrade all libs versions

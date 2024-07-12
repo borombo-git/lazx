@@ -15,6 +15,9 @@ typedef LazxWidgetBuilder<T> = Widget Function(BuildContext context, T? value);
 /// If you would like to build a widget, based on the [LxState] of your [LazxData]
 /// refer to a [LazxStateBuilder] or [LazxDataBuilder]
 ///
+/// If you would like to build a widget, based on multiple [LazxData] values
+/// refer to a [LazxMultiBuilder]
+///
 /// ```dart
 /// LazxBuilder<int>(
 ///   data: LazxDataA

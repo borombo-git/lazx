@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
-import 'package:lazx/src/lazx_data.dart';
 
 /// [LazxWidget] is a widget that will have a single builder function
 /// that will be called each time that the [LxState] of a [LazxData] change.
