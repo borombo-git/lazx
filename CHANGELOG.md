@@ -1,3 +1,11 @@
+## [1.1.6]
+
+* Update SDK constraint to >=3.5.0 <4.0.0
+* Update Flutter constraint to >=3.24.0
+* Update provider to ^6.1.5
+* Remove explicit meta dependency (use Flutter SDK's version)
+* Update demo projects SDK constraints
+
 ## [1.1.5]
 
 * Upgrade all libs versions
