@@ -98,9 +98,10 @@ demos/                     # 3 demo applications
 
 ## Commit Style
 
-Use gitmoji-style prefixes in brackets:
-- `[FEAT]`: New features
-- `[FIX]`: Bug fixes
-- `[VERSION]`: Version bumps
-- `[DOC]`: Documentation
-- `[BUILD]`: Build/CI changes
+Use gitmoji prefixes:
+- ✨ (`:sparkles:`) New features
+- 🐛 (`:bug:`) Bug fixes
+- 🔖 (`:bookmark:`) Version/release tags
+- 📝 (`:memo:`) Documentation
+- 🔧 (`:wrench:`) Configuration/build
+- ♻️ (`:recycle:`) Refactoring
