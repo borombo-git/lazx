@@ -105,3 +105,70 @@ Use gitmoji prefixes:
 - 📝 (`:memo:`) Documentation
 - 🔧 (`:wrench:`) Configuration/build
 - ♻️ (`:recycle:`) Refactoring
+
+---
+
+## v2 Roadmap
+
+Based on field feedback from heavy production usage (BetterReads/Ottr: 52 Views, 23 Managers).
+
+### v2.0 — Core DX & Robustness
+
+#### Features
+
+**1. Typed LazxMultiBuilder (LazxMultiBuilder2 through LazxMultiBuilder5)**
+Eliminate `List<dynamic>` casts. Each variant is fully generic — `LazxMultiBuilder3<A, B, C>` gives
+typed `(A?, B?, C?)` directly in the builder callback. The untyped `LazxMultiBuilder` stays for >5 streams.
+
+**2. LazxExecutor mixin (opt-in execute pattern)**
+Provides `execute<T>(Future<T> Function() task, {bool silent})` with automatic loading/error
+management. Exposed as a mixin (`with LazxExecutor`) so it doesn't bloat ViewModels that don't need it.
+Base `LazxViewModel` gains only `isDisposed` tracking — universally needed, zero opinion.
+
+**3. Lifecycle hooks: onResume / onPause**
+`LazxView`'s State mixes in `WidgetsBindingObserver` to forward app lifecycle events to the ViewModel.
+Common need for refreshing data, reconnecting sockets, saving drafts on background.
+
+#### Bug fixes & hardening
+
+**4. Fix stream subscription leaks**
+Multiple widgets (`LazxStateBuilder`, `LazxDataBuilder`, `LazxWidget`) call `.listen()` in `initState`
+without storing or canceling the subscription. Store subscriptions and cancel them in `dispose()`.
+
+**5. Fix LazxObserverBuilder**
+Currently broken: calls `.listen()` inside `build()`, creating a new subscription on every rebuild
+and never canceling any. Rewrite as a proper `StatefulWidget` or use `StreamBuilder`.
+
+**6. Add dispose to LazxListener**
+`LazxListener` creates a subscription in its constructor with no way to cancel it. Add a `dispose()`
+method and store the `StreamSubscription`.
+
+**7. Fix LazxApp WidgetsBindingObserver registration**
+`LazxAppState` implements `WidgetsBindingObserver` methods but never calls `addObserver(this)` /
+`removeObserver(this)`. The lifecycle callbacks (including manager disposal on detach) never fire.
+
+**8. Add mounted checks before setState**
+`LazxDataBuilder` is missing the `if (!mounted) return` guard before `setState()`. Align with
+`LazxStateBuilder` and `LazxWidget` which already have it.
+
+**9. Unify API naming (breaking, appropriate for v2)**
+- Stream getter: `LazxObserver.observer` -> `LazxObserver.stream` (align with `LazxData.stream`)
+- Value update: `LazxObserver.set()` -> `LazxObserver.push()` (align with `LazxData.push()`)
+- Consider a common `Disposable` interface or make `LazxObserver` extend `LazxObservable` to unify
+  the type hierarchy between ViewModel (`List<LazxObservable>`) and Manager (`List<LazxObserver>`) props.
+
+**10. Add reset() to LazxData**
+Convenience method to reset value to initial and state to `LxState.Initial`. Common need, zero cost.
+
+### v2.1 — Stream Operators & Computed
+
+**11. Debounce / Throttle / Distinct on LazxData**
+Expose RxDart stream operators via extension methods (`.debounced()`, `.throttled()`, `.distinct()`).
+Returns a derived `LazxData` wrapping the transformed stream. Eliminates manual Timer boilerplate.
+
+**12. LazxComputed — derived reactive values**
+`LazxComputed<T>(sources: [...], compute: () => ...)` that auto-recomputes when any source changes.
+Distinct by default (skips rebuild if computed value unchanged). Integrates into `props` for disposal.
+
+**13. Testing helpers**
+`await data.waitForState(LxState.Success)` and similar utilities to simplify async test assertions.
