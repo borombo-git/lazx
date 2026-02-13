@@ -4,6 +4,9 @@ import '../lazx.dart';
 ///
 /// A [LazxViewModel] will mainly help you to handle easily your [LazxData]
 /// It can also be used without any [LazxData] as a classic viewModel to integrate in your app
+///
+/// Lifecycle hooks are called in this order:
+/// [init] -> [onResume] / [onPause] (repeated) -> [dispose]
 abstract class LazxViewModel {
   /// Represents the list of reactive properties in your viewModel
   ///
@@ -14,6 +17,14 @@ abstract class LazxViewModel {
 
   /// Can be override to initialise some calls or variables
   void init() {}
+
+  /// Called when the app comes back to the foreground.
+  /// Override to refresh data, reconnect sockets, etc.
+  void onResume() {}
+
+  /// Called when the app goes to the background.
+  /// Override to save state, pause timers, disconnect, etc.
+  void onPause() {}
 
   /// Can be override to finish some calls/listeners
   /// It's also used to dispose all the [LazxData]

@@ -100,7 +100,42 @@ class SimpleDemoViewModel extends LazxViewModel {
 ```
 The `props` getter is used to dispose all your `LazxData` listeners when the view model is disposed... at the same time that the view it's linked to.
 
-The view model should be linked to a view, the Lazx Screen 👇 
+##### Lifecycle Hooks
+
+Your ViewModel can react to the app going to background or coming back to foreground by overriding `onResume` and `onPause`:
+
+```dart
+class MyViewModel extends LazxViewModel {
+  LazxData<List<Message>> messages = LazxData([]);
+
+  @override
+  List<LazxDisposable> get props => [messages];
+
+  @override
+  void init() {
+    loadMessages();
+  }
+
+  @override
+  void onResume() {
+    // Refresh data when user comes back to the app
+    loadMessages();
+  }
+
+  @override
+  void onPause() {
+    // Save draft, disconnect socket, etc.
+  }
+
+  void loadMessages() {
+    // ...
+  }
+}
+```
+
+These hooks are automatically wired when your ViewModel is used with a `LazxView` — no extra setup needed.
+
+The view model should be linked to a view, the Lazx Screen 👇
 
 #### Lazx ~~Screen~~ View  - The View
 The view will be **linked to only one view model**. 
@@ -170,11 +205,11 @@ LazxObserver<int?> value = LazxObserver();
 // Or with an initial value 
 LazxObserver<String> text = LazxObserver(initialValue: 'Hello');
 
-// Set the data
-value.set(1);
+// Update the data
+value.push(1);
 
 // Listen the data
-value.observer.listen((data) {
+value.stream.listen((data) {
   print(data);
 });
 ````
@@ -239,7 +274,7 @@ class UserManager extends LazxManager {
   late LazxObserver<User?> currentUser = LazxObserver();
 
   @override
-  List<LazxObserver> get props => [currentUser];
+  List<LazxDisposable> get props => [currentUser];
 
   //...
 }

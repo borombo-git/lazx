@@ -48,5 +48,59 @@ void main() {
       verify(() => viewModel.init()).called(1);
       expect(testScreen._viewModel, isInstanceOf<FakeViewModel>());
     });
+
+    testWidgets('onResume is called when app comes to foreground',
+        (WidgetTester tester) async {
+      final viewModel = FakeViewModel();
+      await tester.pumpWidget(TestApp(viewModel));
+
+      // Simulate app going to background then back to foreground
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+
+      verify(() => viewModel.onResume()).called(1);
+    });
+
+    testWidgets('onPause is called when app goes to background',
+        (WidgetTester tester) async {
+      final viewModel = FakeViewModel();
+      await tester.pumpWidget(TestApp(viewModel));
+
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+
+      verify(() => viewModel.onPause()).called(1);
+    });
+
+    testWidgets('onResume and onPause are called multiple times',
+        (WidgetTester tester) async {
+      final viewModel = FakeViewModel();
+      await tester.pumpWidget(TestApp(viewModel));
+
+      // Simulate multiple background/foreground cycles
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+
+      verify(() => viewModel.onPause()).called(2);
+      verify(() => viewModel.onResume()).called(2);
+    });
+
+    testWidgets('Lifecycle hooks are not called after dispose',
+        (WidgetTester tester) async {
+      final viewModel = FakeViewModel();
+      await tester.pumpWidget(TestApp(viewModel));
+
+      // Remove the widget (triggers dispose)
+      await tester.pumpWidget(MaterialApp(home: Container()));
+
+      // Simulate lifecycle change after dispose
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+
+      // Should not have been called since the observer was removed
+      verifyNever(() => viewModel.onPause());
+      verifyNever(() => viewModel.onResume());
+    });
   });
 }

@@ -28,23 +28,41 @@ abstract class LazxView<T extends LazxViewModel> extends StatefulWidget {
 }
 
 /// [LazxState] Represents the state for the [LazxView] so you don't have
-/// to handle it
-class LazxState<T extends LazxViewModel> extends State<LazxView<T>> {
+/// to handle it.
+///
+/// Observes the app lifecycle and forwards [AppLifecycleState.resumed] and
+/// [AppLifecycleState.paused] events to the ViewModel's [onResume] / [onPause].
+class LazxState<T extends LazxViewModel> extends State<LazxView<T>>
+    with WidgetsBindingObserver {
   /// [viewModel] will be your viewModel. It's keep in the state so it's linked
   /// to you screen widget lifestyle
   late T viewModel;
 
-  /// Will init your state and get/init your [viewModel]
+  /// Will init your state, get/init your [viewModel] and register the
+  /// lifecycle observer
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     viewModel = widget.getViewModel()..init();
     widget.init(context, viewModel);
   }
 
-  /// Will dispose your state and do the same to your [viewModel]
+  /// Forwards app lifecycle changes to the ViewModel
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      viewModel.onResume();
+    } else if (state == AppLifecycleState.paused) {
+      viewModel.onPause();
+    }
+  }
+
+  /// Will dispose your state, unregister the lifecycle observer and do the
+  /// same to your [viewModel]
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     widget.dispose(context);
     viewModel.dispose();
     super.dispose();
