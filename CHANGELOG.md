@@ -1,3 +1,29 @@
+## [2.0.0]
+
+### Breaking changes
+
+* **LazxObserver**: `observer` getter renamed to `stream` (aligns with `LazxData.stream`)
+* **LazxObserver**: `set()` renamed to `push()` (aligns with `LazxData.push()`)
+* **LazxDisposable**: New base class for all Lazx reactive types — both `LazxObservable` and `LazxObserver` implement it
+* **LazxViewModel.props**: Type changed from `List<LazxObservable>` to `List<LazxDisposable>` — can now hold any Lazx reactive type
+* **LazxManager.props**: Type changed from `List<LazxObserver>` to `List<LazxDisposable>` — unified with ViewModel
+
+### New features
+
+* **LazxData.reset()**: Restores value and state to their initial values
+* **Lifecycle hooks**: `LazxViewModel.onResume()` and `onPause()` — automatically called when the app goes to foreground/background via `LazxView`'s `WidgetsBindingObserver`
+* **LazxViewModel.isDisposed**: Tracks whether the ViewModel has been disposed — useful to guard async callbacks
+* **LazxExecutor mixin**: Opt-in `execute<T>(task, {silent})` with automatic `isLoading`/`error` management. Add `with LazxExecutor` and spread `...executorProps` into your props list
+* **Typed LazxMultiBuilder**: `LazxMultiBuilder2` through `LazxMultiBuilder5` — type-safe variants that provide typed values directly in the builder callback instead of `List<dynamic>`
+
+### Bug fixes
+
+* **LazxStateBuilder, LazxDataBuilder, LazxWidget**: Fix stream subscription leaks — subscriptions are now stored and canceled on dispose
+* **LazxDataBuilder**: Add missing `mounted` guard before `setState()`
+* **LazxObserverBuilder**: Rewrite as StatefulWidget — was previously calling `.listen()` inside `build()`, leaking a new subscription on every rebuild
+* **LazxListener**: Add `dispose()` method to cancel the stream subscription
+* **LazxApp**: Register `WidgetsBindingObserver` with `addObserver`/`removeObserver` — lifecycle callbacks (including manager disposal on app detach) were previously dead code
+
 ## [1.1.6]
 
 * Update SDK constraint to >=3.5.0 <4.0.0
