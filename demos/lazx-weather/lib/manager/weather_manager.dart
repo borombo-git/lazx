@@ -15,14 +15,14 @@ class WeatherManager extends LazxManager {
   late LazxObserver<Weather?> displayedWeather = LazxObserver();
 
   @override
-  List<LazxObserver> get props => [displayedWeather];
+  List<LazxDisposable> get props => [displayedWeather];
 
   Future<LxResponse<Weather>> getWeather(String city) async {
     // Query the repository
     final response = await _repository.getWeather(city);
     // Set the weather if response is successful
     if (response.success) {
-      displayedWeather.set(response.data);
+      displayedWeather.push(response.data);
     }
     return response;
   }

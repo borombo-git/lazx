@@ -100,7 +100,79 @@ class SimpleDemoViewModel extends LazxViewModel {
 ```
 The `props` getter is used to dispose all your `LazxData` listeners when the view model is disposed... at the same time that the view it's linked to.
 
-The view model should be linked to a view, the Lazx Screen 👇 
+##### Lifecycle Hooks
+
+Your ViewModel can react to the app going to background or coming back to foreground by overriding `onResume` and `onPause`:
+
+```dart
+class MyViewModel extends LazxViewModel {
+  LazxData<List<Message>> messages = LazxData([]);
+
+  @override
+  List<LazxDisposable> get props => [messages];
+
+  @override
+  void init() {
+    loadMessages();
+  }
+
+  @override
+  void onResume() {
+    // Refresh data when user comes back to the app
+    loadMessages();
+  }
+
+  @override
+  void onPause() {
+    // Save draft, disconnect socket, etc.
+  }
+
+  void loadMessages() {
+    // ...
+  }
+}
+```
+
+These hooks are automatically wired when your ViewModel is used with a `LazxView` — no extra setup needed.
+
+##### LazxExecutor — Async Task Management
+
+For ViewModels that perform async operations (API calls, database queries), the `LazxExecutor` mixin provides automatic loading and error management:
+
+```dart
+class ItemsViewModel extends LazxViewModel with LazxExecutor {
+  final items = LazxData<List<Item>>([]);
+
+  @override
+  List<LazxDisposable> get props => [items, ...executorProps];
+
+  Future<void> loadItems() async {
+    final result = await execute(() => api.fetchItems());
+    if (result != null) {
+      items.push(result, lxState: LxState.Success);
+    }
+  }
+
+  Future<void> refreshInBackground() async {
+    // silent: true -> no loading indicator
+    final result = await execute(() => api.fetchItems(), silent: true);
+    if (result != null) {
+      items.push(result, lxState: LxState.Success);
+    }
+  }
+}
+```
+
+The mixin gives you:
+- **`isLoading`** (`LazxData<bool>`) — automatically `true` during `execute`, `false` after
+- **`error`** (`LazxData<Object?>`) — captures any thrown exception, cleared before each new call
+- **`execute<T>(task, {silent})`** — runs the task with try/catch, returns `T?` (`null` on error)
+- **`clearError()`** — manually reset the error
+- **`executorProps`** — add to your `props` list for automatic disposal
+
+It's opt-in: ViewModels that don't need it stay lean.
+
+The view model should be linked to a view, the Lazx Screen 👇
 
 #### Lazx ~~Screen~~ View  - The View
 The view will be **linked to only one view model**. 
@@ -170,11 +242,11 @@ LazxObserver<int?> value = LazxObserver();
 // Or with an initial value 
 LazxObserver<String> text = LazxObserver(initialValue: 'Hello');
 
-// Set the data
-value.set(1);
+// Update the data
+value.push(1);
 
 // Listen the data
-value.observer.listen((data) {
+value.stream.listen((data) {
   print(data);
 });
 ````
@@ -239,7 +311,7 @@ class UserManager extends LazxManager {
   late LazxObserver<User?> currentUser = LazxObserver();
 
   @override
-  List<LazxObserver> get props => [currentUser];
+  List<LazxDisposable> get props => [currentUser];
 
   //...
 }
@@ -348,16 +420,41 @@ LazxDataBuilder(
 The behavior is the same than with the `LazxStateBuilder`.
 
 #### Lazx Multi Builder
-The `LazxMultiBuilder` is like a `LazxBuilder` but it listen to multiple source of `LazxData` at the same time. 
+The `LazxMultiBuilder` listens to multiple `LazxData` sources at the same time. The widget rebuilds each time any of the data changes.
 
-The widget is then rebuild each time one of the data is updated. 
-> ⚠️ The state is not used with this builder
-> 
+##### Typed variants (recommended)
+Use `LazxMultiBuilder2` through `LazxMultiBuilder5` for full type safety — no casts needed:
+
 ```dart
-LazxMultiBuilder(  
-  data: [viewModel.counter, viewModel.show],  
-  builder: (context, values) {  
-    return Text('Counter: ${values[0]} & Show: ${values[1]}');  
+LazxMultiBuilder2<int, bool>(
+  data1: viewModel.counter,
+  data2: viewModel.isVisible,
+  builder: (context, counter, isVisible) {
+    // counter is int?, isVisible is bool? — fully typed!
+    return Text('Counter: $counter & Visible: $isVisible');
+  },
+),
+
+LazxMultiBuilder3<List<Item>, bool, String?>(
+  data1: viewModel.items,
+  data2: viewModel.isLoading,
+  data3: viewModel.errorMessage,
+  builder: (context, items, isLoading, error) {
+    if (isLoading == true) return CircularProgressIndicator();
+    return ListView(children: items?.map((i) => Text(i.name)).toList() ?? []);
+  },
+),
+```
+
+##### Untyped variant
+For more than 5 streams or dynamic use cases, use the untyped `LazxMultiBuilder`:
+> ⚠️ The state is not used with this builder
+
+```dart
+LazxMultiBuilder(
+  data: [viewModel.counter, viewModel.show],
+  builder: (context, values) {
+    return Text('Counter: ${values[0]} & Show: ${values[1]}');
   }
 ),
 ```

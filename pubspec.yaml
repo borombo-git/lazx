@@ -1,18 +1,17 @@
 name: lazx
 description: A state management library based on the ViewModel design pattern for Flutter.
-version: 1.1.5
+version: 2.0.0
 homepage: https://github.com/borombo-git/lazx
 
 environment:
-  sdk: ">=2.12.0 <4.0.0"
-  flutter: ">=1.17.0"
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
     sdk: flutter
   rxdart: ^0.28.0
-  provider: ^6.1.2
-  meta: ^1.11.0
+  provider: ^6.1.5
 
 dev_dependencies:
   flutter_test:

@@ -13,11 +13,11 @@ class AuthManager extends LazxManager {
   LazxObserver<bool> authenticated = LazxObserver();
 
   @override
-  List<LazxObserver> get props => [authenticated];
+  List<LazxDisposable> get props => [authenticated];
 
   AuthManager._() {
     _auth.authStateChanges().listen((user) {
-      authenticated.set(user != null);
+      authenticated.push(user != null);
     });
   }
 

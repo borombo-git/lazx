@@ -8,12 +8,12 @@ class LoginViewModel extends LazxViewModel {
   TextEditingController passwordTextController = TextEditingController();
 
   @override
-  List<LazxObservable> get props => [loginRequest];
+  List<LazxDisposable> get props => [loginRequest];
 
   @override
   void init() {
     super.init();
-    AuthManager().authenticated.observer.listen((authenticated) {
+    AuthManager().authenticated.stream.listen((authenticated) {
       if (authenticated) {
         loginRequest.setState(LxState.Success);
       }

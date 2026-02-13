@@ -5,11 +5,11 @@ import 'auth/auth_manager.dart';
 class HomeViewModel extends LazxViewModel {
   LazxState logoutRequest = LazxState();
   @override
-  List<LazxObservable> get props => [logoutRequest];
+  List<LazxDisposable> get props => [logoutRequest];
 
   @override
   void init() {
-    AuthManager().authenticated.observer.listen((authenticated) {
+    AuthManager().authenticated.stream.listen((authenticated) {
       if (!authenticated) {
         logoutRequest.setState(LxState.Success);
       }

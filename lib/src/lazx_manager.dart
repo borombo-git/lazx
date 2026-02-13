@@ -6,11 +6,12 @@ import 'package:lazx/lazx.dart';
 /// data from your repositories (or other data sources) that will have LazxObserver
 /// to observe.
 abstract class LazxManager {
-  /// Represents the list of the [LazxObserver] in your manager
+  /// Represents the list of reactive properties in your manager
   ///
-  /// This variable is used to handle the lifecycle of your observer and dispose
+  /// This variable is used to handle the lifecycle of your data and dispose
   /// them when your manager is disposed (when tied to your [LazxApp] widget).
-  List<LazxObserver> get props;
+  /// Accepts any Lazx reactive type ([LazxObserver], [LazxData], [LazxState]).
+  List<LazxDisposable> get props;
 
   LazxManager() {
     init();

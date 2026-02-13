@@ -7,7 +7,7 @@ class FakeManager extends Mock implements LazxManager {
   final data = LazxObserver<int>(initialValue: 1);
 
   @override
-  List<LazxObserver> get props => [data];
+  List<LazxDisposable> get props => [data];
 }
 
 class TestScreen extends LazxApp {
