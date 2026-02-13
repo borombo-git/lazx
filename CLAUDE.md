@@ -129,36 +129,17 @@ Base `LazxViewModel` gains only `isDisposed` tracking — universally needed, ze
 `LazxView`'s State mixes in `WidgetsBindingObserver` to forward app lifecycle events to the ViewModel.
 Common need for refreshing data, reconnecting sockets, saving drafts on background.
 
-#### Bug fixes & hardening
+#### Bug fixes & hardening (all done)
 
-**4. Fix stream subscription leaks**
-Multiple widgets (`LazxStateBuilder`, `LazxDataBuilder`, `LazxWidget`) call `.listen()` in `initState`
-without storing or canceling the subscription. Store subscriptions and cancel them in `dispose()`.
-
-**5. Fix LazxObserverBuilder**
-Currently broken: calls `.listen()` inside `build()`, creating a new subscription on every rebuild
-and never canceling any. Rewrite as a proper `StatefulWidget` or use `StreamBuilder`.
-
-**6. Add dispose to LazxListener**
-`LazxListener` creates a subscription in its constructor with no way to cancel it. Add a `dispose()`
-method and store the `StreamSubscription`.
-
-**7. Fix LazxApp WidgetsBindingObserver registration**
-`LazxAppState` implements `WidgetsBindingObserver` methods but never calls `addObserver(this)` /
-`removeObserver(this)`. The lifecycle callbacks (including manager disposal on detach) never fire.
-
-**8. Add mounted checks before setState**
-`LazxDataBuilder` is missing the `if (!mounted) return` guard before `setState()`. Align with
-`LazxStateBuilder` and `LazxWidget` which already have it.
-
-**9. Unify API naming (breaking, appropriate for v2)**
-- Stream getter: `LazxObserver.observer` -> `LazxObserver.stream` (align with `LazxData.stream`)
-- Value update: `LazxObserver.set()` -> `LazxObserver.push()` (align with `LazxData.push()`)
-- Consider a common `Disposable` interface or make `LazxObserver` extend `LazxObservable` to unify
-  the type hierarchy between ViewModel (`List<LazxObservable>`) and Manager (`List<LazxObserver>`) props.
-
-**10. Add reset() to LazxData**
-Convenience method to reset value to initial and state to `LxState.Initial`. Common need, zero cost.
+- ~~**4. Fix stream subscription leaks**~~ — Store subscriptions and cancel on dispose in
+  `LazxStateBuilder`, `LazxDataBuilder`, `LazxWidget`
+- ~~**5. Fix LazxObserverBuilder**~~ — Rewritten as StatefulWidget with proper subscription lifecycle
+- ~~**6. Add dispose to LazxListener**~~ — Stores subscription, exposes `dispose()`
+- ~~**7. Fix LazxApp WidgetsBindingObserver registration**~~ — Added `addObserver`/`removeObserver`
+- ~~**8. Add mounted checks before setState**~~ — Added guard in `LazxDataBuilder`
+- ~~**9. Unify API naming**~~ — `LazxObserver.observer` -> `.stream`, `.set()` -> `.push()`,
+  new `LazxDisposable` base class, unified `props` type across VM and Manager
+- ~~**10. Add reset() to LazxData**~~ — Resets value and state to initial
 
 ### v2.1 — Stream Operators & Computed
 
