@@ -116,16 +116,16 @@ Based on field feedback from heavy production usage (BetterReads/Ottr: 52 Views,
 
 #### Features
 
-**1. Typed LazxMultiBuilder (LazxMultiBuilder2 through LazxMultiBuilder5)**
+~~**1. Typed LazxMultiBuilder (LazxMultiBuilder2 through LazxMultiBuilder5)**~~
 Eliminate `List<dynamic>` casts. Each variant is fully generic — `LazxMultiBuilder3<A, B, C>` gives
 typed `(A?, B?, C?)` directly in the builder callback. The untyped `LazxMultiBuilder` stays for >5 streams.
 
-**2. LazxExecutor mixin (opt-in execute pattern)**
+~~**2. LazxExecutor mixin (opt-in execute pattern)**~~
 Provides `execute<T>(Future<T> Function() task, {bool silent})` with automatic loading/error
 management. Exposed as a mixin (`with LazxExecutor`) so it doesn't bloat ViewModels that don't need it.
 Base `LazxViewModel` gains only `isDisposed` tracking — universally needed, zero opinion.
 
-**3. Lifecycle hooks: onResume / onPause**
+~~**3. Lifecycle hooks: onResume / onPause**~~
 `LazxView`'s State mixes in `WidgetsBindingObserver` to forward app lifecycle events to the ViewModel.
 Common need for refreshing data, reconnecting sockets, saving drafts on background.
 
