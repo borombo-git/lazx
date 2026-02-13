@@ -135,6 +135,43 @@ class MyViewModel extends LazxViewModel {
 
 These hooks are automatically wired when your ViewModel is used with a `LazxView` — no extra setup needed.
 
+##### LazxExecutor — Async Task Management
+
+For ViewModels that perform async operations (API calls, database queries), the `LazxExecutor` mixin provides automatic loading and error management:
+
+```dart
+class ItemsViewModel extends LazxViewModel with LazxExecutor {
+  final items = LazxData<List<Item>>([]);
+
+  @override
+  List<LazxDisposable> get props => [items, ...executorProps];
+
+  Future<void> loadItems() async {
+    final result = await execute(() => api.fetchItems());
+    if (result != null) {
+      items.push(result, lxState: LxState.Success);
+    }
+  }
+
+  Future<void> refreshInBackground() async {
+    // silent: true -> no loading indicator
+    final result = await execute(() => api.fetchItems(), silent: true);
+    if (result != null) {
+      items.push(result, lxState: LxState.Success);
+    }
+  }
+}
+```
+
+The mixin gives you:
+- **`isLoading`** (`LazxData<bool>`) — automatically `true` during `execute`, `false` after
+- **`error`** (`LazxData<Object?>`) — captures any thrown exception, cleared before each new call
+- **`execute<T>(task, {silent})`** — runs the task with try/catch, returns `T?` (`null` on error)
+- **`clearError()`** — manually reset the error
+- **`executorProps`** — add to your `props` list for automatic disposal
+
+It's opt-in: ViewModels that don't need it stay lean.
+
 The view model should be linked to a view, the Lazx Screen 👇
 
 #### Lazx ~~Screen~~ View  - The View

@@ -8,6 +8,11 @@ import '../lazx.dart';
 /// Lifecycle hooks are called in this order:
 /// [init] -> [onResume] / [onPause] (repeated) -> [dispose]
 abstract class LazxViewModel {
+  /// Whether this ViewModel has been disposed.
+  /// Useful to guard against async callbacks completing after dispose.
+  bool _isDisposed = false;
+  bool get isDisposed => _isDisposed;
+
   /// Represents the list of reactive properties in your viewModel
   ///
   /// This variable is used to handle the lifecycle of your data as your viewModel
@@ -29,6 +34,7 @@ abstract class LazxViewModel {
   /// Can be override to finish some calls/listeners
   /// It's also used to dispose all the [LazxData]
   void dispose() {
+    _isDisposed = true;
     props.forEach((value) => value.dispose());
   }
 }
