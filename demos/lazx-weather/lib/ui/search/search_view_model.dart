@@ -10,7 +10,7 @@ class SearchViewModel extends LazxViewModel {
   TextEditingController cityTextController = TextEditingController();
 
   @override
-  List<LazxObservable> get props => [weatherRequest];
+  List<LazxDisposable> get props => [weatherRequest];
 
   @override
   void init() {
@@ -18,7 +18,7 @@ class SearchViewModel extends LazxViewModel {
     _weatherManager = WeatherManager();
 
     // Listen to the current weather, if updated, the request succeeded
-    _weatherManager.displayedWeather.observer.listen((displayedWeather) {
+    _weatherManager.displayedWeather.stream.listen((displayedWeather) {
       weatherRequest.setState(LxState.Success);
     });
   }

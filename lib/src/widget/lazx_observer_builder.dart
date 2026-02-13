@@ -51,7 +51,7 @@ class _LazxObserverBuilderState<T> extends State<LazxObserverBuilder<T>> {
   @override
   void initState() {
     super.initState();
-    _subscription = widget.data.observer.listen((data) {
+    _subscription = widget.data.stream.listen((data) {
       if (!mounted) return;
       widget.builder(data);
     });

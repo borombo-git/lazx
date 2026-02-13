@@ -6,7 +6,7 @@ class ResultViewModel extends LazxViewModel {
   late WeatherManager _weatherManager;
 
   @override
-  List<LazxObservable> get props => [weather];
+  List<LazxDisposable> get props => [weather];
 
   // Initialise the weather with an empty Weather object
   LazxData<Weather> weather = LazxData(Weather.empty());
@@ -16,7 +16,7 @@ class ResultViewModel extends LazxViewModel {
     _weatherManager = WeatherManager();
 
     // Listen to the displayed/requested weather
-    _weatherManager.displayedWeather.observer.listen((displayedWeather) {
+    _weatherManager.displayedWeather.stream.listen((displayedWeather) {
       // If not null, put it in the lazx data with success state
       if (displayedWeather != null) {
         weather.push(displayedWeather, lxState: LxState.Success);

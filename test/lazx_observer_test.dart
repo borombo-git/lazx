@@ -11,13 +11,13 @@ void main() {
 
       test('Test the right value after update', () {
         final data = LazxObserver<int>(initialValue: 1);
-        data.set(2);
+        data.push(2);
         expect(data.value, 2);
       });
 
       test('Test the right value emitted', () {
         final data = LazxObserver<int>(initialValue: 1);
-        data.observer.listen(
+        data.stream.listen(
           expectAsync1(
             (value) {
               expect(value, 1);
@@ -28,8 +28,8 @@ void main() {
 
       test('Test the right value emitted after emitted', () {
         final data = LazxObserver<int>(initialValue: 1);
-        data.set(2);
-        data.observer.listen(
+        data.push(2);
+        data.stream.listen(
           expectAsync1(
             (value) {
               expect(value, 2);

@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 
 class FakeEmptyManager extends LazxManager {
   @override
-  List<LazxObserver> get props => [];
+  List<LazxDisposable> get props => [];
 }
 
 class MockedData<T> extends Mock implements LazxObserver {
@@ -15,14 +15,14 @@ class FakeManager extends LazxManager {
   final data = LazxObserver<int>(initialValue: 1);
 
   @override
-  List<LazxObserver> get props => [data];
+  List<LazxDisposable> get props => [data];
 }
 
 class FakeMockedManager extends LazxManager {
   final data = MockedData<int>(1);
 
   @override
-  List<LazxObserver> get props => [data];
+  List<LazxDisposable> get props => [data];
 }
 
 void main() {
@@ -38,8 +38,8 @@ void main() {
       test('Init', () {
         final manager = FakeManager();
         expect(manager.props.length, 1);
-        expect(manager.props[0].value, 1);
-        manager.props[0].observer.listen(
+        expect(manager.data.value, 1);
+        manager.data.stream.listen(
           expectAsync1(
             (value) {
               expect(value, 1);
@@ -56,7 +56,7 @@ void main() {
       test('Dispose stop data\'s streams', () {
         final manager = FakeManager()..dispose();
         expectLater(
-            manager.props[0].observer, emitsInOrder([emits(1), emitsDone]));
+            manager.data.stream, emitsInOrder([emits(1), emitsDone]));
       });
     });
   });

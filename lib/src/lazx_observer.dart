@@ -7,12 +7,12 @@ import 'package:rxdart/rxdart.dart';
 /// [T] represent the type of your data.
 ///
 /// This class is similar to [LazxData] without the state handled.
-class LazxObserver<T> {
+class LazxObserver<T> implements LazxDisposable {
   /// You can create [LazxObserver] with a default value.
   LazxObserver({T? initialValue}) {
     if (initialValue != null) {
       _value = initialValue;
-      set(_value!);
+      push(_value!);
     }
   }
 
@@ -21,18 +21,19 @@ class LazxObserver<T> {
 
   /// An observer for your data's value
   final _valueObserver = BehaviorSubject<T>();
-  Stream<T> get observer => _valueObserver.stream;
+  Stream<T> get stream => _valueObserver.stream;
 
   /// A getter to access your data value
   T? get value => _value;
 
-  /// Set a new value
-  void set(T newValue) {
+  /// Set a new value and notify all listeners
+  void push(T newValue) {
     _value = newValue;
     _valueObserver.sink.add(newValue);
   }
 
   /// Close the observer
+  @override
   void dispose() {
     _valueObserver.close();
   }
