@@ -420,16 +420,41 @@ LazxDataBuilder(
 The behavior is the same than with the `LazxStateBuilder`.
 
 #### Lazx Multi Builder
-The `LazxMultiBuilder` is like a `LazxBuilder` but it listen to multiple source of `LazxData` at the same time. 
+The `LazxMultiBuilder` listens to multiple `LazxData` sources at the same time. The widget rebuilds each time any of the data changes.
 
-The widget is then rebuild each time one of the data is updated. 
-> ⚠️ The state is not used with this builder
-> 
+##### Typed variants (recommended)
+Use `LazxMultiBuilder2` through `LazxMultiBuilder5` for full type safety — no casts needed:
+
 ```dart
-LazxMultiBuilder(  
-  data: [viewModel.counter, viewModel.show],  
-  builder: (context, values) {  
-    return Text('Counter: ${values[0]} & Show: ${values[1]}');  
+LazxMultiBuilder2<int, bool>(
+  data1: viewModel.counter,
+  data2: viewModel.isVisible,
+  builder: (context, counter, isVisible) {
+    // counter is int?, isVisible is bool? — fully typed!
+    return Text('Counter: $counter & Visible: $isVisible');
+  },
+),
+
+LazxMultiBuilder3<List<Item>, bool, String?>(
+  data1: viewModel.items,
+  data2: viewModel.isLoading,
+  data3: viewModel.errorMessage,
+  builder: (context, items, isLoading, error) {
+    if (isLoading == true) return CircularProgressIndicator();
+    return ListView(children: items?.map((i) => Text(i.name)).toList() ?? []);
+  },
+),
+```
+
+##### Untyped variant
+For more than 5 streams or dynamic use cases, use the untyped `LazxMultiBuilder`:
+> ⚠️ The state is not used with this builder
+
+```dart
+LazxMultiBuilder(
+  data: [viewModel.counter, viewModel.show],
+  builder: (context, values) {
+    return Text('Counter: ${values[0]} & Show: ${values[1]}');
   }
 ),
 ```
