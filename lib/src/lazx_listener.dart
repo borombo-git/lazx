@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:lazx/lazx.dart';
 
 /// [LazxListenerBuilder] is a type for a builder function that have a
@@ -6,6 +8,9 @@ typedef LazxListenerBuilder = void Function(LxState value);
 
 /// A [LazxListener] is a listener that will call a function depending on
 /// the [LxState] of the [data].
+///
+/// Call [dispose] when the listener is no longer needed to cancel the
+/// underlying stream subscription.
 class LazxListener {
   /// The [data] that will be listened to execute the [builder] function
   final LazxState data;
@@ -17,6 +22,9 @@ class LazxListener {
   final LazxListenerBuilder? success;
   final LazxListenerBuilder? error;
 
+  /// Subscription to the state stream, canceled on [dispose]
+  StreamSubscription<LxState>? _subscription;
+
   LazxListener(
       {required this.data,
       this.initial,
@@ -25,7 +33,7 @@ class LazxListener {
       this.error}) {
     /// We listen to the data's state and calling the right listener builder
     /// function
-    data.state.listen((state) {
+    _subscription = data.state.listen((state) {
       switch (state) {
         case LxState.Initial:
           initial?.call(state);
@@ -41,5 +49,11 @@ class LazxListener {
           break;
       }
     });
+  }
+
+  /// Cancels the state stream subscription.
+  /// Must be called when the listener is no longer needed to avoid leaks.
+  void dispose() {
+    _subscription?.cancel();
   }
 }
