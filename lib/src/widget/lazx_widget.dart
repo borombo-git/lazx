@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lazx/lazx.dart';
 
@@ -31,17 +33,26 @@ class _LazxWidgetState extends State<LazxWidget> {
   /// By default, the state is `Initial`
   LxState _state = LxState.Initial;
 
+  /// Subscription to the state stream, canceled on dispose
+  StreamSubscription<LxState>? _stateSubscription;
+
   /// The state is initialized and we listen to the state of the `data` to update
   /// the [_state] and rebuild the widget
   @override
   void initState() {
     super.initState();
-    widget.data.state.listen((state) {
+    _stateSubscription = widget.data.state.listen((state) {
       if (!mounted) return;
       setState(() {
         _state = state;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription?.cancel();
+    super.dispose();
   }
 
   /// The build will simply return the method created in the Widget and pass the
