@@ -18,13 +18,16 @@ enum LxState { Initial, Loading, Success, Error }
 class LazxData<T> extends LazxObservable {
   /// You can create [LazxData] with a default value.
   /// The default state will be [Initial]
-  LazxData(this._value) {
+  LazxData(this._value) : _initialValue = _value {
     _state = LxState.Initial;
     push(_value);
   }
 
   /// Represent the [LxState] of your data
   LxState? _state;
+
+  /// The initial value provided at construction, used by [reset]
+  final T _initialValue;
 
   /// Represent your data
   T _value;
@@ -51,6 +54,11 @@ class LazxData<T> extends LazxObservable {
       _valueObserver.sink.add(newValue);
       setState((lxState ?? this._state)!);
     }
+  }
+
+  /// Resets the value to its initial value and the state to [LxState.Initial]
+  void reset() {
+    push(_initialValue, lxState: LxState.Initial);
   }
 
   /// Close all the observers
