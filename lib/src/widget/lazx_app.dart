@@ -50,6 +50,7 @@ class LazxAppState extends State<LazxApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     widget.init(context);
   }
 
@@ -76,6 +77,7 @@ class LazxAppState extends State<LazxApp> with WidgetsBindingObserver {
   /// Will dispose the state and do the same for all the managers
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     widget.dispose(context);
     disposeManagers();
     super.dispose();
