@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'lx_data_builder_demo.dart';
 import 'lx_multi_builder_demo.dart';
+import 'lx_operators_demo.dart';
 import 'lx_state_builder_demo.dart';
 import 'lx_view_demo.dart';
 import 'lx_widget_demo.dart';
@@ -56,6 +57,14 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => LxMultiDemoView()));
+              },
+            ),
+            // Stream Operators
+            ElevatedButton(
+              child: Text('Stream Operators Demo'),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => LxOperatorsDemoView()));
               },
             ),
           ],

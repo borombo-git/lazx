@@ -460,7 +460,51 @@ LazxMultiBuilder(
 ```
 The `values` list will contain the values of the data in the same order as the list you passed in the `data` parameter.
 
-Check the examples for more concrete usages 👇 
+#### Stream Operators
+`LazxData` provides stream operator extensions that return a **read-only derived** `LazxData`. The derived data works as a drop-in replacement in any Lazx builder.
+
+##### Debounce
+Wait for the user to stop typing before reacting:
+```dart
+final query = LazxData<String>('');
+final debouncedQuery = query.debounced(Duration(milliseconds: 300));
+
+// Use like any LazxData
+LazxBuilder<String>(
+  data: debouncedQuery,
+  builder: (context, value) => Text('Search: $value'),
+)
+```
+
+##### Throttle
+Limit the rate of high-frequency events:
+```dart
+final counter = LazxData<int>(0);
+final throttled = counter.throttled(Duration(seconds: 1));
+```
+
+##### Distinct
+Skip consecutive duplicate values:
+```dart
+final status = LazxData<String>('idle');
+final distinctStatus = status.distinct();
+
+// With custom comparator
+final items = LazxData<List<int>>([]);
+final distinctItems = items.distinct((a, b) => a.length == b.length);
+```
+
+##### Chaining
+Operators can be chained together:
+```dart
+final searchQuery = query
+    .debounced(Duration(milliseconds: 300))
+    .distinct();
+```
+
+> Derived data is **read-only** — calling `push()`, `setState()`, or `reset()` on it will throw an `UnsupportedError`. Update the source `LazxData` instead.
+
+Check the examples for more concrete usages 👇
 
 ## Examples
 - [Demo App ⚙️](https://github.com/borombo-git/lazx/tree/main/demos/demo) - A simple demo of all the Lazx Widgets/Builders

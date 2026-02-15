@@ -1,3 +1,14 @@
+## [2.1.0]
+
+### New features
+
+* **Stream Operators**: Extension methods on `LazxData` that return read-only derived data
+  * `debounced(Duration)` — emits value only after a pause in updates (search fields, form validation)
+  * `throttled(Duration)` — limits emission rate (scroll events, rapid taps)
+  * `distinct([equals])` — skips consecutive duplicate values, with optional custom comparator
+* **LazxDerivedData**: Read-only `LazxData` subclass backing the stream operators. Works as a drop-in replacement in all Lazx builders. Calling `push()`, `setState()`, or `reset()` throws `UnsupportedError`
+* **Chaining**: Operators can be chained (e.g. `query.debounced(...).distinct()`)
+
 ## [2.0.0]
 
 ### Breaking changes
