@@ -2,6 +2,7 @@ library lazx;
 
 export 'src/lazx_data.dart';
 export 'src/lazx_derived_data.dart';
+export 'src/lazx_computed.dart';
 export 'src/lazx_data_extensions.dart';
 export 'src/lazx_view.dart' hide LazxState;
 export 'src/lazx_view_model.dart';

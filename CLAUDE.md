@@ -125,13 +125,8 @@ Use gitmoji prefixes:
 
 ## Roadmap — v2.1 (Stream Operators & Computed)
 
-**Debounce / Throttle / Distinct on LazxData**
-Expose RxDart stream operators via extension methods (`.debounced()`, `.throttled()`, `.distinct()`).
-Returns a derived `LazxData` wrapping the transformed stream. Eliminates manual Timer boilerplate.
+All v2.1 features are implemented:
 
-**LazxComputed — derived reactive values**
-`LazxComputed<T>(sources: [...], compute: () => ...)` that auto-recomputes when any source changes.
-Distinct by default (skips rebuild if computed value unchanged). Integrates into `props` for disposal.
-
-**Testing helpers**
-`await data.waitForState(LxState.Success)` and similar utilities to simplify async test assertions.
+- [x] **Debounce / Throttle / Distinct on LazxData** — Stream operators via extension methods
+- [x] **LazxComputed** — Derived reactive values from multiple sources with auto-recomputation and state aggregation
+- [x] **Testing helpers** — `waitForState`, `expectStateSequence`, `waitForValue`, `expectEmits`

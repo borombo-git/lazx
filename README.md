@@ -504,6 +504,53 @@ final searchQuery = query
 
 > Derived data is **read-only** — calling `push()`, `setState()`, or `reset()` on it will throw an `UnsupportedError`. Update the source `LazxData` instead.
 
+#### Computed Values
+`LazxComputed` derives a value from multiple reactive sources, auto-recomputing whenever any source changes. It's **distinct by default** — if the computed value hasn't changed, the emission is skipped.
+
+```dart
+final firstName = LazxData<String>('John');
+final lastName = LazxData<String>('Doe');
+
+final fullName = LazxComputed<String>(
+  sources: [firstName, lastName],
+  compute: () => '${firstName.value} ${lastName.value}',
+);
+// fullName.value == 'John Doe'
+
+firstName.push('Jane');
+// fullName.value == 'Jane Doe'
+```
+
+Works with any mix of `LazxData`, `LazxObserver`, and `LazxState` sources:
+```dart
+final price = LazxData<double>(9.99);
+final quantity = LazxData<int>(1);
+
+final total = LazxComputed<double>(
+  sources: [price, quantity],
+  compute: () => price.value * quantity.value,
+);
+```
+
+State is aggregated from observable sources with priority: **Error > Loading > Success > Initial**. Use it in any Lazx builder:
+```dart
+LazxBuilder<double>(
+  data: total,
+  builder: (context, value) => Text('Total: \$${value.toStringAsFixed(2)}'),
+)
+```
+
+To allow duplicate emissions, set `distinct: false`:
+```dart
+final computed = LazxComputed<int>(
+  sources: [a, b],
+  compute: () => a.value + b.value,
+  distinct: false,
+);
+```
+
+> `LazxComputed` is **read-only** — calling `push()`, `setState()`, or `reset()` throws `UnsupportedError`. Update the source data instead.
+
 #### Testing Helpers
 
 Lazx ships testing utilities in a **separate import** so they're never bundled into production code:
