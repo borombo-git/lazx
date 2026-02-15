@@ -504,6 +504,57 @@ final searchQuery = query
 
 > Derived data is **read-only** — calling `push()`, `setState()`, or `reset()` on it will throw an `UnsupportedError`. Update the source `LazxData` instead.
 
+#### Testing Helpers
+
+Lazx ships testing utilities in a **separate import** so they're never bundled into production code:
+
+```dart
+import 'package:lazx/lazx_testing.dart';
+```
+
+##### waitForState / waitForValue
+Wait for a specific state or value to be observed — resolves immediately if already matching:
+
+```dart
+final data = LazxData<int>(0);
+data.setState(LxState.Loading);
+
+// Completes as soon as Loading is observed
+await data.waitForState(LxState.Loading);
+
+data.push(42);
+await data.waitForValue(42);
+```
+
+##### expectStateSequence
+Verify an exact sequence of state transitions (strict — fails on unexpected state):
+
+```dart
+final data = LazxData<int>(0);
+
+// Schedule transitions
+Future(() => data.setState(LxState.Loading));
+Future(() => data.push(1, lxState: LxState.Success));
+
+await data.expectStateSequence([
+  LxState.Initial,
+  LxState.Loading,
+  LxState.Success,
+]);
+```
+
+##### expectEmits
+Verify a sequence of emitted values (BehaviorSubject replay counts as first emission):
+
+```dart
+final data = LazxData<String>('hello');
+Future(() => data.push('world'));
+
+await data.expectEmits(['hello', 'world']);
+```
+
+All helpers accept an optional `timeout` parameter (default 5 s) and throw `TimeoutException` with a descriptive message on timeout. They also work on `LazxObserver`.
+
 Check the examples for more concrete usages 👇
 
 ## Examples
