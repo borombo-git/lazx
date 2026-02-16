@@ -460,7 +460,149 @@ LazxMultiBuilder(
 ```
 The `values` list will contain the values of the data in the same order as the list you passed in the `data` parameter.
 
-Check the examples for more concrete usages 👇 
+#### Stream Operators
+`LazxData` provides stream operator extensions that return a **read-only derived** `LazxData`. The derived data works as a drop-in replacement in any Lazx builder.
+
+##### Debounce
+Wait for the user to stop typing before reacting:
+```dart
+final query = LazxData<String>('');
+final debouncedQuery = query.debounced(Duration(milliseconds: 300));
+
+// Use like any LazxData
+LazxBuilder<String>(
+  data: debouncedQuery,
+  builder: (context, value) => Text('Search: $value'),
+)
+```
+
+##### Throttle
+Limit the rate of high-frequency events:
+```dart
+final counter = LazxData<int>(0);
+final throttled = counter.throttled(Duration(seconds: 1));
+```
+
+##### Distinct
+Skip consecutive duplicate values:
+```dart
+final status = LazxData<String>('idle');
+final distinctStatus = status.distinct();
+
+// With custom comparator
+final items = LazxData<List<int>>([]);
+final distinctItems = items.distinct((a, b) => a.length == b.length);
+```
+
+##### Chaining
+Operators can be chained together:
+```dart
+final searchQuery = query
+    .debounced(Duration(milliseconds: 300))
+    .distinct();
+```
+
+> Derived data is **read-only** — calling `push()`, `setState()`, or `reset()` on it will throw an `UnsupportedError`. Update the source `LazxData` instead.
+
+#### Computed Values
+`LazxComputed` derives a value from multiple reactive sources, auto-recomputing whenever any source changes. It's **distinct by default** — if the computed value hasn't changed, the emission is skipped.
+
+```dart
+final firstName = LazxData<String>('John');
+final lastName = LazxData<String>('Doe');
+
+final fullName = LazxComputed<String>(
+  sources: [firstName, lastName],
+  compute: () => '${firstName.value} ${lastName.value}',
+);
+// fullName.value == 'John Doe'
+
+firstName.push('Jane');
+// fullName.value == 'Jane Doe'
+```
+
+Works with any mix of `LazxData`, `LazxObserver`, and `LazxState` sources:
+```dart
+final price = LazxData<double>(9.99);
+final quantity = LazxData<int>(1);
+
+final total = LazxComputed<double>(
+  sources: [price, quantity],
+  compute: () => price.value * quantity.value,
+);
+```
+
+State is aggregated from observable sources with priority: **Error > Loading > Success > Initial**. Use it in any Lazx builder:
+```dart
+LazxBuilder<double>(
+  data: total,
+  builder: (context, value) => Text('Total: \$${value.toStringAsFixed(2)}'),
+)
+```
+
+To allow duplicate emissions, set `distinct: false`:
+```dart
+final computed = LazxComputed<int>(
+  sources: [a, b],
+  compute: () => a.value + b.value,
+  distinct: false,
+);
+```
+
+> `LazxComputed` is **read-only** — calling `push()`, `setState()`, or `reset()` throws `UnsupportedError`. Update the source data instead.
+
+#### Testing Helpers
+
+Lazx ships testing utilities in a **separate import** so they're never bundled into production code:
+
+```dart
+import 'package:lazx/lazx_testing.dart';
+```
+
+##### waitForState / waitForValue
+Wait for a specific state or value to be observed — resolves immediately if already matching:
+
+```dart
+final data = LazxData<int>(0);
+data.setState(LxState.Loading);
+
+// Completes as soon as Loading is observed
+await data.waitForState(LxState.Loading);
+
+data.push(42);
+await data.waitForValue(42);
+```
+
+##### expectStateSequence
+Verify an exact sequence of state transitions (strict — fails on unexpected state):
+
+```dart
+final data = LazxData<int>(0);
+
+// Schedule transitions
+Future(() => data.setState(LxState.Loading));
+Future(() => data.push(1, lxState: LxState.Success));
+
+await data.expectStateSequence([
+  LxState.Initial,
+  LxState.Loading,
+  LxState.Success,
+]);
+```
+
+##### expectEmits
+Verify a sequence of emitted values (BehaviorSubject replay counts as first emission):
+
+```dart
+final data = LazxData<String>('hello');
+Future(() => data.push('world'));
+
+await data.expectEmits(['hello', 'world']);
+```
+
+All helpers accept an optional `timeout` parameter (default 5 s) and throw `TimeoutException` with a descriptive message on timeout. They also work on `LazxObserver`.
+
+Check the examples for more concrete usages 👇
 
 ## Examples
 - [Demo App ⚙️](https://github.com/borombo-git/lazx/tree/main/demos/demo) - A simple demo of all the Lazx Widgets/Builders

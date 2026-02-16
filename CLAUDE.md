@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Lazx is a lightweight Flutter state management library based on the MVVM design pattern. It provides reactive data containers with built-in state tracking (Initial/Loading/Success/Error) and widget builders for UI binding.
 
-**Current version**: 2.0.0
+**Current version**: 2.1.0
 
 ## Common Commands
 
@@ -45,11 +45,24 @@ Every LazxData operates with 4 states:
 - `LxState.Success` - Operation completed successfully
 - `LxState.Error` - Operation failed
 
+### Type Hierarchy
+
+- **LazxDisposable** - Base interface for all reactive types (provides `dispose()`)
+- **LazxObservable** - Abstract class extending LazxDisposable, adds state stream (LxState)
+
+Both `LazxData` and `LazxObserver` implement `LazxDisposable`, allowing `props` to hold any reactive type.
+
 ### ViewModel Layer
 
 - **LazxViewModel** - Base class for screen business logic. Holds LazxData instances
-  - Must override `props` getter to declare all reactive properties for auto-disposal
+  - Must override `props` getter (`List<LazxDisposable>`) to declare all reactive properties for auto-disposal
   - `init()` called when view is created, `dispose()` called when view is destroyed
+  - `onResume()` / `onPause()` — lifecycle hooks called when app goes to foreground/background
+  - `isDisposed` — tracks disposal state for guarding async callbacks
+
+- **LazxExecutor** - Opt-in mixin (`with LazxExecutor`) for async task management
+  - `execute<T>(task, {silent})` with automatic `isLoading`/`error` management
+  - Spread `...executorProps` into your `props` list
 
 - **LazxManager** - Singleton base for app-wide state. Uses LazxObserver instead of LazxData
   - Connected to LazxApp lifecycle for proper disposal
@@ -70,7 +83,8 @@ Every LazxData operates with 4 states:
 | `LazxBuilder<T>` | Rebuilds on value changes only (ignores state) |
 | `LazxStateBuilder<T>` | Provides `initial/loading/success/error` builder functions |
 | `LazxDataBuilder<T>` | Uses a `LazxStateWidget` for cleaner separation |
-| `LazxMultiBuilder` | Listens to multiple LazxData streams simultaneously |
+| `LazxMultiBuilder` | Listens to multiple LazxData streams (untyped, for >5 streams) |
+| `LazxMultiBuilder2-5` | Type-safe variants with typed values in builder callback |
 
 ### Utility Classes
 
@@ -88,6 +102,7 @@ lib/
     ├── lazx_observer.dart # State-less observer
     ├── lazx_state.dart    # Value-less state
     ├── lazx_view_model.dart
+    ├── lazx_executor.dart # Opt-in async task mixin
     ├── lazx_manager.dart
     ├── lazx_view.dart
     └── widget/            # All UI builders
@@ -108,48 +123,10 @@ Use gitmoji prefixes:
 
 ---
 
-## v2 Roadmap
+## Roadmap — v2.1 (Stream Operators & Computed)
 
-Based on field feedback from heavy production usage (BetterReads/Ottr: 52 Views, 23 Managers).
+All v2.1 features are implemented:
 
-### v2.0 — Core DX & Robustness
-
-#### Features
-
-~~**1. Typed LazxMultiBuilder (LazxMultiBuilder2 through LazxMultiBuilder5)**~~
-Eliminate `List<dynamic>` casts. Each variant is fully generic — `LazxMultiBuilder3<A, B, C>` gives
-typed `(A?, B?, C?)` directly in the builder callback. The untyped `LazxMultiBuilder` stays for >5 streams.
-
-~~**2. LazxExecutor mixin (opt-in execute pattern)**~~
-Provides `execute<T>(Future<T> Function() task, {bool silent})` with automatic loading/error
-management. Exposed as a mixin (`with LazxExecutor`) so it doesn't bloat ViewModels that don't need it.
-Base `LazxViewModel` gains only `isDisposed` tracking — universally needed, zero opinion.
-
-~~**3. Lifecycle hooks: onResume / onPause**~~
-`LazxView`'s State mixes in `WidgetsBindingObserver` to forward app lifecycle events to the ViewModel.
-Common need for refreshing data, reconnecting sockets, saving drafts on background.
-
-#### Bug fixes & hardening (all done)
-
-- ~~**4. Fix stream subscription leaks**~~ — Store subscriptions and cancel on dispose in
-  `LazxStateBuilder`, `LazxDataBuilder`, `LazxWidget`
-- ~~**5. Fix LazxObserverBuilder**~~ — Rewritten as StatefulWidget with proper subscription lifecycle
-- ~~**6. Add dispose to LazxListener**~~ — Stores subscription, exposes `dispose()`
-- ~~**7. Fix LazxApp WidgetsBindingObserver registration**~~ — Added `addObserver`/`removeObserver`
-- ~~**8. Add mounted checks before setState**~~ — Added guard in `LazxDataBuilder`
-- ~~**9. Unify API naming**~~ — `LazxObserver.observer` -> `.stream`, `.set()` -> `.push()`,
-  new `LazxDisposable` base class, unified `props` type across VM and Manager
-- ~~**10. Add reset() to LazxData**~~ — Resets value and state to initial
-
-### v2.1 — Stream Operators & Computed
-
-**11. Debounce / Throttle / Distinct on LazxData**
-Expose RxDart stream operators via extension methods (`.debounced()`, `.throttled()`, `.distinct()`).
-Returns a derived `LazxData` wrapping the transformed stream. Eliminates manual Timer boilerplate.
-
-**12. LazxComputed — derived reactive values**
-`LazxComputed<T>(sources: [...], compute: () => ...)` that auto-recomputes when any source changes.
-Distinct by default (skips rebuild if computed value unchanged). Integrates into `props` for disposal.
-
-**13. Testing helpers**
-`await data.waitForState(LxState.Success)` and similar utilities to simplify async test assertions.
+- [x] **Debounce / Throttle / Distinct on LazxData** — Stream operators via extension methods
+- [x] **LazxComputed** — Derived reactive values from multiple sources with auto-recomputation and state aggregation
+- [x] **Testing helpers** — `waitForState`, `expectStateSequence`, `waitForValue`, `expectEmits`

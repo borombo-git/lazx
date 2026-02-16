@@ -1,3 +1,20 @@
+## [2.1.0]
+
+### New features
+
+* **Stream Operators**: Extension methods on `LazxData` that return read-only derived data
+  * `debounced(Duration)` — emits value only after a pause in updates (search fields, form validation)
+  * `throttled(Duration)` — limits emission rate (scroll events, rapid taps)
+  * `distinct([equals])` — skips consecutive duplicate values, with optional custom comparator
+* **LazxDerivedData**: Read-only `LazxData` subclass backing the stream operators. Works as a drop-in replacement in all Lazx builders. Calling `push()`, `setState()`, or `reset()` throws `UnsupportedError`
+* **LazxComputed**: Derived reactive values that auto-recompute when any source changes. Supports mixed source types (`LazxData`, `LazxObserver`, `LazxState`), aggregates state with Error > Loading > Success > Initial priority, and is distinct by default (skips rebuild if computed value unchanged)
+* **Chaining**: Operators can be chained (e.g. `query.debounced(...).distinct()`)
+* **Testing Helpers** (`package:lazx/lazx_testing.dart`): Extension methods for async test assertions
+  * `waitForState(LxState)` — completes when the target state is observed
+  * `expectStateSequence(List<LxState>)` — strict ordered state sequence check
+  * `waitForValue(T)` — completes when the target value is observed
+  * `expectEmits(List<T>)` — verifies a sequence of emitted values
+
 ## [2.0.0]
 
 ### Breaking changes
