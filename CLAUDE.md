@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Lazx is a lightweight Flutter state management library based on the MVVM design pattern. It provides reactive data containers with built-in state tracking (Initial/Loading/Success/Error) and widget builders for UI binding.
 
-**Current version**: 2.0.0
+**Current version**: 2.1.0
 
 ## Common Commands
 
