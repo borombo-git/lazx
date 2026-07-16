@@ -1,3 +1,9 @@
+## [2.2.0]
+
+### New features
+
+* **LazxSubscriptions mixin** (on `LazxViewModel` and `LazxManager`): `listenTo(stream, onData)` registers a stream subscription that is automatically cancelled on `dispose()` — replaces the hand-written `StreamSubscription` field + `dispose()` override per listener. `cancelSubscriptions()` is exposed for manual control, and `listenTo` returns the subscription for early cancellation.
+
 ## [2.1.0]
 
 ### New features
