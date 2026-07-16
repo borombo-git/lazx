@@ -135,6 +135,28 @@ class MyViewModel extends LazxViewModel {
 
 These hooks are automatically wired when your ViewModel is used with a `LazxView` — no extra setup needed.
 
+##### listenTo — Auto-cancelled Subscriptions
+
+When a ViewModel listens to a manager's data (or any stream), use `listenTo` instead of `stream.listen()`. The subscription is registered and automatically cancelled when the ViewModel is disposed — no `StreamSubscription` field, no `dispose()` override:
+
+```dart
+class HomeViewModel extends LazxViewModel {
+  final LazxData<String> username = LazxData('');
+
+  @override
+  List<LazxDisposable> get props => [username];
+
+  @override
+  void init() {
+    listenTo(UserManager().user.stream, (user) {
+      username.push(user.name);
+    });
+  }
+}
+```
+
+A bare `stream.listen()` inside a ViewModel keeps firing into the disposed ViewModel for the lifetime of the manager — `listenTo` is the safe default. It returns the `StreamSubscription` if you need to pause or cancel it earlier. `LazxManager` has the same API for manager-to-manager listeners.
+
 ##### LazxExecutor — Async Task Management
 
 For ViewModels that perform async operations (API calls, database queries), the `LazxExecutor` mixin provides automatic loading and error management:

@@ -6,6 +6,7 @@ export 'src/lazx_computed.dart';
 export 'src/lazx_data_extensions.dart';
 export 'src/lazx_view.dart' hide LazxState;
 export 'src/lazx_view_model.dart';
+export 'src/lazx_subscriptions.dart';
 export 'src/lazx_executor.dart';
 export 'src/lazx_view_model_provider.dart';
 export 'src/widget/lazx_widgets.dart';

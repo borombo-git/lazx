@@ -5,7 +5,7 @@ import 'package:lazx/lazx.dart';
 /// A manager could be implement in many ways, this one helps you to observe the
 /// data from your repositories (or other data sources) that will have LazxObserver
 /// to observe.
-abstract class LazxManager {
+abstract class LazxManager with LazxSubscriptions {
   /// Represents the list of reactive properties in your manager
   ///
   /// This variable is used to handle the lifecycle of your data and dispose
@@ -21,8 +21,10 @@ abstract class LazxManager {
   void init() {}
 
   /// Can be override to finish some calls/listeners
-  /// It's also used to dispose all the [LazxObserver]
+  /// It's also used to dispose all the [LazxObserver] and cancel every
+  /// subscription registered via [listenTo]
   void dispose() {
+    cancelSubscriptions();
     props.forEach((value) => value.dispose());
   }
 }

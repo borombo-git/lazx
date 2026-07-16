@@ -7,7 +7,10 @@ import '../lazx.dart';
 ///
 /// Lifecycle hooks are called in this order:
 /// [init] -> [onResume] / [onPause] (repeated) -> [dispose]
-abstract class LazxViewModel {
+///
+/// Manager/stream listeners registered with [listenTo] are cancelled
+/// automatically in [dispose].
+abstract class LazxViewModel with LazxSubscriptions {
   /// Whether this ViewModel has been disposed.
   /// Useful to guard against async callbacks completing after dispose.
   bool _isDisposed = false;
@@ -32,9 +35,11 @@ abstract class LazxViewModel {
   void onPause() {}
 
   /// Can be override to finish some calls/listeners
-  /// It's also used to dispose all the [LazxData]
+  /// It's also used to dispose all the [LazxData] and cancel every
+  /// subscription registered via [listenTo]
   void dispose() {
     _isDisposed = true;
+    cancelSubscriptions();
     props.forEach((value) => value.dispose());
   }
 }

@@ -59,6 +59,11 @@ Both `LazxData` and `LazxObserver` implement `LazxDisposable`, allowing `props` 
   - `init()` called when view is created, `dispose()` called when view is destroyed
   - `onResume()` / `onPause()` — lifecycle hooks called when app goes to foreground/background
   - `isDisposed` — tracks disposal state for guarding async callbacks
+  - `listenTo(stream, onData)` — registers a stream subscription auto-cancelled on `dispose()` (from `LazxSubscriptions`); use instead of bare `.listen()` for listeners whose lifetime matches the ViewModel
+
+- **LazxSubscriptions** - Mixin on both `LazxViewModel` and `LazxManager` backing `listenTo`
+  - `cancelSubscriptions()` cancels everything registered via `listenTo`; called by `dispose()` automatically
+  - Not for per-session subscriptions that are cancelled and re-created repeatedly (the list only clears on dispose) — keep those manual
 
 - **LazxExecutor** - Opt-in mixin (`with LazxExecutor`) for async task management
   - `execute<T>(task, {silent})` with automatic `isLoading`/`error` management
@@ -66,6 +71,7 @@ Both `LazxData` and `LazxObserver` implement `LazxDisposable`, allowing `props` 
 
 - **LazxManager** - Singleton base for app-wide state. Uses LazxObserver instead of LazxData
   - Connected to LazxApp lifecycle for proper disposal
+  - Also has `listenTo` for manager-to-manager stream listeners
 
 ### View Layer
 
